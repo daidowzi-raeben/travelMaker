@@ -1,4 +1,4 @@
-# app
+# gamemaker
 
 ## Build Setup
 
@@ -6,22 +6,25 @@
 # install dependencies
 $ npm install
 
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
+$ npm run start # serve with hot reload at localhost:3000
 
 # generate static project
-$ npm run generate
+$ npm run master
 ```
 
 For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
 
 ## Special Directories
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+### `setting`
+
+```bash
+#.env 파일 수정
+API_JAVA=http://localhost:8080 #주석
+API_JAVA=http://URL #주석해제
+```
+
+`.env` 파일 원격에 커밋 금지
 
 ### `assets`
 
