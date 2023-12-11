@@ -21,21 +21,25 @@
         </div>
       </div>
     </div>
-    <div class="main-wrap">
-      <div class="main-menu">
-        <ul class="menu-list">
-          <li class="menu-list--item">
-            <div class="icon festival"></div>
-            <p class="text">축제공연행사</p>
-          </li>
-        </ul>
+    <div class="content">
+      <div class="search-top">
+        <div class="left">
+          <div class="search-wrap">
+            <el-input v-model="search" placeholder="가고싶은 곳을 검색해보세요"></el-input>
+            <button type="button" class="btn search-btn">
+              <i class="el-icon-search"></i>
+            </button>
+          </div>
+        </div>
+        <div class="right">
+          <button type="button" class="btn btn-filter">필터</button>
+        </div>
       </div>
-      <div class="main-list--wrap">
-        <div class="main-list--tit">지금, 진행중인 축제</div>
-        <ul class="thumb-list">
-          <li v-for="i in 9" :key="i" class="thumb-list--item">
-            <div class="thumb">
-              <img src="../static/images/Thumbnail.png" alt="" />
+      <div class="list-option"></div>
+      <ul class="thumb-list">
+        <li v-for="i in 9" :key="i" class="thumb-list--item">
+          <div class="thumb">
+              <img src="../../static/images/Thumbnail.png" alt="" />
             </div>
             <div class="text">
               <div class="tit">서울한강축제</div>
@@ -44,9 +48,9 @@
                 <span>축제</span>
               </div>
             </div>
-          </li>
-        </ul>
-      </div>
+        </li>
+      </ul>
+      <el-backtop target=".wrap"></el-backtop>
     </div>
   </div>
 </template>
