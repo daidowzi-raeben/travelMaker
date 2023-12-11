@@ -24,9 +24,16 @@ export default {
         content:
           'width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no',
       },
+      {
+        name: 'google-signin-client_id',
+        content: '326804284084-no57a7j7m7ifgund1ukiut04bkhdm6q4',
+      },
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
-      { name: 'naver-site-verification', content: '783b2f08786d9c4cf3fa6b41af59f567816a7f6d' },
+      {
+        name: 'naver-site-verification',
+        content: '783b2f08786d9c4cf3fa6b41af59f567816a7f6d',
+      },
       // {
       //   name: 'google-signin-client_id',
       //   content:
@@ -35,11 +42,21 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { src: 'https://apis.google.com/js/platform.js?onload=init' },
+      // { src: 'https://apis.google.com/js/platform.js?onload=init' },
       {
         src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8019581580650071',
         crossorigin: 'anonymous',
       },
+      // {
+      //   src: 'https://accounts.google.com/gsi/client',
+      //   async: true,
+      //   defer: true,
+      // },
+      // {
+      //   src: 'https://apis.google.com/js/platform.js',
+      //   async: true,
+      //   defer: true,
+      // },
     ],
   },
 
@@ -70,8 +87,12 @@ export default {
     { src: '~plugins/VShowSlide.js', ssr: false, mode: 'client' },
     // { src: '~plugins/VClickOutside.js', ssr: false, mode: 'client' },
     { src: '~plugins/Element-ui.js', ssr: false, mode: 'client' },
+    { src: '~plugins/googleMaps.js', ssr: false, mode: 'client' },
+    { src: '~plugins/vue-google-oauth2.js', ssr: false, mode: 'client' },
     {
-      src: '~plugins/vue-cropper.js', ssr: false, mode: 'client'
+      src: '~plugins/vue-cropper.js',
+      ssr: false,
+      mode: 'client',
     },
   ],
 
@@ -103,6 +124,7 @@ export default {
     'vue2-editor/nuxt',
     'cookie-universal-nuxt',
     'nuxt-element-ui',
+    // 'vue2-google-maps',
     '@nuxtjs/proxy',
   ],
 
@@ -119,14 +141,14 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     // baseURL: '/',
-    proxy: true     // proxy 사용
+    proxy: true, // proxy 사용
   },
   proxy: {
     '/api': {
       target: 'http://localhost:3095/',
       secure: false,
-      changeOrigin: true
-    }
+      changeOrigin: true,
+    },
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -147,7 +169,6 @@ export default {
     //   },
     // },
   },
-
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
@@ -172,5 +193,4 @@ export default {
   },
   ssr: true,
   // server: { port: process.env.PORT, host: '0.0.0.0' },
-
 }
