@@ -86,7 +86,7 @@ export default {
     { src: '~plugins/Vuedraggable.js', ssr: false, mode: 'client' },
     { src: '~plugins/VShowSlide.js', ssr: false, mode: 'client' },
     // { src: '~plugins/VClickOutside.js', ssr: false, mode: 'client' },
-    { src: '~plugins/element-ui.js', ssr: false, mode: 'client' },
+    { src: '~plugins/elementUI.js', ssr: false, mode: 'client' },
     { src: '~plugins/googleMaps.js', ssr: false, mode: 'client' },
     { src: '~plugins/vue-google-oauth2.js', ssr: false, mode: 'client' },
     {
