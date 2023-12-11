@@ -86,9 +86,13 @@ export default {
     { src: '~plugins/Vuedraggable.js', ssr: false, mode: 'client' },
     { src: '~plugins/VShowSlide.js', ssr: false, mode: 'client' },
     // { src: '~plugins/VClickOutside.js', ssr: false, mode: 'client' },
+<<<<<<< Updated upstream
     { src: '~plugins/Element-ui.js', ssr: false, mode: 'client' },
     { src: '~plugins/googleMaps.js', ssr: false, mode: 'client' },
     { src: '~plugins/vue-google-oauth2.js', ssr: false, mode: 'client' },
+=======
+    { src: '~plugins/element-ui.js', ssr: false, mode: 'client' },
+>>>>>>> Stashed changes
     {
       src: '~plugins/vue-cropper.js',
       ssr: false,

@@ -1,24 +1,15 @@
 <template>
   <div class="wrap">
-    <div class="header">
-      <div class="fix-header">
-        <div class="header-logo"></div>
-        <div class="right">
-          <el-button type="success" round>Language</el-button>
-          <button type="button" class="btn">Language</button>
-        </div>
-        <div class="search-wrap">
-          <el-input v-model="search" placeholder="가고싶은 곳을 검색해보세요"></el-input>
-          <button type="button" class="btn search-btn">
-            <i class="el-icon-search"></i>
-          </button>
-        </div>
+    <div class="main-header">
+      <div class="header-logo"></div>
+      <div class="right">
+        <el-button type="success" size="small" round>Language</el-button>
       </div>
-      <div class="scroll-header">
-        <div class="header-logo"></div>
-        <div class="right">
-          <button type="button" class="btn header-menu"></button>
-        </div>
+      <div class="search-wrap">
+        <el-input v-model="search" placeholder="가고싶은 곳을 검색해보세요"></el-input>
+        <button type="button" class="btn search-btn">
+          <i class="el-icon-search"></i>
+        </button>
       </div>
     </div>
     <div class="main-wrap">
@@ -33,14 +24,14 @@
       <div class="main-list--wrap">
         <div class="main-list--tit">지금, 진행중인 축제</div>
         <ul class="thumb-list">
-          <li v-for="i in 9" :key="i" class="thumb-list--item">
+          <li v-for="i in 4" :key="i" class="thumb-list--item">
             <div class="thumb">
               <img src="../static/images/Thumbnail.png" alt="" />
             </div>
             <div class="text">
               <div class="tit">서울한강축제</div>
               <div class="info">
-                <span>서울</span>
+                <span>서울</span> /
                 <span>축제</span>
               </div>
             </div>

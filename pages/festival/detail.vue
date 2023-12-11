@@ -1,25 +1,8 @@
 <template>
   <div class="wrap">
     <div class="header">
-      <div class="fix-header">
-        <div class="header-logo"></div>
-        <div class="right">
-          <el-button type="success" round>Language</el-button>
-          <button type="button" class="btn">Language</button>
-        </div>
-        <div class="search-wrap">
-          <el-input v-model="search" placeholder="가고싶은 곳을 검색해보세요"></el-input>
-          <button type="button" class="btn search-btn">
-            <i class="el-icon-search"></i>
-          </button>
-        </div>
-      </div>
-      <div class="scroll-header">
-        <div class="header-logo"></div>
-        <div class="right">
-          <button type="button" class="btn header-menu"></button>
-        </div>
-      </div>
+      <div class="header-logo"></div>
+      <button type="button" class="btn header-menu"></button>
     </div>
     <div class="content">
       <div class="detail-wrap">
