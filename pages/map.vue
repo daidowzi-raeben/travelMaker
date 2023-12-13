@@ -13,7 +13,18 @@
                 </gmap-marker>
             </gmap-cluster>
         </gmap-map>
-        {{ EVENT_DATA.MAKERS }}
+        <!-- {{ EVENT_DATA.MAKERS }} -->
+        <div>
+            <table>
+                <tr v-for="(v, i) in EVENT_DATA.LIST" :key="i">
+                    <td>{{ v.addr1 }}</td>
+                    <td>{{ v.title }}</td>
+                    <td>{{ v.tel }}</td>
+                    <td><img :src="v.firstimage" width="100"></td>
+                    <td><img :src="v.firstimage2" width="100"></td>
+                </tr>
+            </table>
+        </div>
     </div>
 </template>
 
