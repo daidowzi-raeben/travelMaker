@@ -1,21 +1,10 @@
 <template>
   <div class="wrap">
-    <div class="main-header">
-      <div class="header-logo"></div>
-      <div class="right">
-        <el-button type="success" size="small" round>Language</el-button>
-      </div>
-      <div class="search-wrap">
-        <el-input v-model="search" placeholder="가고싶은 곳을 검색해보세요"></el-input>
-        <button type="button" class="btn search-btn">
-          <i class="el-icon-search"></i>
-        </button>
-      </div>
-    </div>
     <div class="main-wrap">
       <div class="main-menu">
         <ul class="menu-list">
-          <li class="menu-list--item">
+          <li class="menu-list--item" @click="$router.push('/festival/list')">
+            <router-link to=""></router-link>
             <div class="icon festival"></div>
             <p class="text">축제공연행사</p>
           </li>
@@ -52,12 +41,9 @@ export default {
       search: '',
     }
   },
-  computed: {
-
-  },
-  mounted() {
-  },
+  computed: {},
+  mounted() {},
 }
 </script>
 
-<style lang="scss" ></style>
+<style lang="scss"></style>

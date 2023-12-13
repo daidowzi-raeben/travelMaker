@@ -1,9 +1,5 @@
 <template>
   <div class="wrap">
-    <div class="header">
-      <div class="header-logo"></div>
-      <button type="button" class="btn header-menu"></button>
-    </div>
     <div class="content">
       <div class="detail-wrap">
         <div class="detail-img">
@@ -26,7 +22,12 @@
             </p>
           </div>
         </div>
-        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+        <el-menu
+          :default-active="activeIndex"
+          class="el-menu-demo"
+          mode="horizontal"
+          @select="handleSelect"
+        >
           <el-menu-item index="1">기본정보</el-menu-item>
           <el-menu-item index="2">이용안내</el-menu-item>
           <el-menu-item index="3">상세정보</el-menu-item>
@@ -56,17 +57,14 @@ export default {
       activeIndex: '1',
     }
   },
-  computed: {
-
-  },
-  mounted() {
-  },
+  computed: {},
+  mounted() {},
   methods: {
     handleSelect(key, keyPath) {
-      console.log(key, keyPath);
-    }
+      console.log(key, keyPath)
+    },
   },
 }
 </script>
 
-<style lang="scss" ></style>
+<style lang="scss"></style>

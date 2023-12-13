@@ -1,14 +1,13 @@
 <template>
   <div class="wrap">
-    <div class="header">
-      <div class="header-logo"></div>
-      <button type="button" class="btn header-menu"></button>
-    </div>
     <div class="content">
       <div class="search-top">
         <div class="left">
           <div class="search-wrap">
-            <el-input v-model="search" placeholder="가고싶은 곳을 검색해보세요"></el-input>
+            <el-input
+              v-model="search"
+              placeholder="가고싶은 곳을 검색해보세요"
+            ></el-input>
             <button type="button" class="btn search-btn">
               <i class="el-icon-search"></i>
             </button>
@@ -20,7 +19,9 @@
       </div>
       <div class="list-option">
         <div class="left">
-          <button type="button" class="btn btn-check">진행중인 축제만 보기</button>
+          <button type="button" class="btn btn-check">
+            진행중인 축제만 보기
+          </button>
         </div>
         <div class="right">
           <button type="button" class="btn btn-list"></button>
@@ -31,15 +32,15 @@
       <ul class="thumb-list">
         <li v-for="i in 9" :key="i" class="thumb-list--item">
           <div class="thumb">
-              <img src="../../static/images/Thumbnail.png" alt="" />
+            <img src="../../static/images/Thumbnail.png" alt="" />
+          </div>
+          <div class="text">
+            <div class="tit">서울한강축제</div>
+            <div class="info">
+              <span>서울</span>
+              <span>축제</span>
             </div>
-            <div class="text">
-              <div class="tit">서울한강축제</div>
-              <div class="info">
-                <span>서울</span>
-                <span>축제</span>
-              </div>
-            </div>
+          </div>
         </li>
       </ul>
       <el-backtop target=".wrap"></el-backtop>
@@ -57,12 +58,9 @@ export default {
       search: '',
     }
   },
-  computed: {
-
-  },
-  mounted() {
-  },
+  computed: {},
+  mounted() {},
 }
 </script>
 
-<style lang="scss" ></style>
+<style lang="scss"></style>

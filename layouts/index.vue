@@ -1,7 +1,26 @@
 <template>
   <div>
-    <el-button v-if="!isSignIn" type="primary" icon="fas fa-edit"  @click="handleClickSignIn">sign
-      in</el-button>
+    <div v-if="$route.fullPath == '/'" class="main-header">
+      <div class="header-logo"></div>
+      <div class="right">
+        <el-button type="success" size="small" round>Language</el-button>
+      </div>
+      <div class="search-wrap">
+        <el-input
+          v-model="search"
+          placeholder="가고싶은 곳을 검색해보세요"
+        ></el-input>
+        <button type="button" class="btn search-btn">
+          <i class="el-icon-search"></i>
+        </button>
+      </div>
+    </div>
+    <div v-else class="header">
+      <div class="header-logo" @click="$router.push('/')"></div>
+      <button type="button" class="btn header-menu"></button>
+    </div>
+    <!-- <el-button v-if="!isSignIn" type="primary" icon="fas fa-edit"  @click="handleClickSignIn">sign
+      in</el-button> -->
     <Nuxt />
   </div>
 </template>
@@ -13,11 +32,12 @@ export default {
   name: 'IndexLayout',
   data() {
     return {
-     isInit: false,
+      isInit: false,
       isSignIn: false,
+      search: '',
     }
   },
-    created() {
+  created() {
     // const that = this;
     // const checkGauthLoad = setInterval(function () {
     //   that.isInit = that.$gAuth.isInit;
@@ -29,31 +49,27 @@ export default {
     // this.googleInitialize()
   },
   methods: {
-
     async handleClickSignIn() {
       try {
-        const googleUser = await this.$gAuth.signIn();
+        const googleUser = await this.$gAuth.signIn()
         if (!googleUser) {
-          return null;
+          return null
         }
-        console.log("googleUser", googleUser);
-        console.log("getId", googleUser.getId());
-        console.log("getBasicProfile", googleUser.getBasicProfile());
-        console.log("getAuthResponse", googleUser.getAuthResponse());
+        console.log('googleUser', googleUser)
+        console.log('getId', googleUser.getId())
+        console.log('getBasicProfile', googleUser.getBasicProfile())
+        console.log('getAuthResponse', googleUser.getAuthResponse())
         console.log(
-          "getAuthResponse",
+          'getAuthResponse',
           this.$gAuth.GoogleAuth.currentUser.get().getAuthResponse()
-        );
-        this.isSignIn = this.$gAuth.isAuthorized;
+        )
+        this.isSignIn = this.$gAuth.isAuthorized
       } catch (error) {
-        console.error(error);
-        return null;
+        console.error(error)
+        return null
       }
     },
-
-  }
-
-
+  },
 }
 </script>
 
