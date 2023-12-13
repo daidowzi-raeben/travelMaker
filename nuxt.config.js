@@ -144,9 +144,10 @@ export default {
     proxy: true, // proxy 사용
   },
   proxy: {
-    '/api': {
-      target: 'http://localhost:3095/',
+    '/google': {
+      target: 'https://maps.googleapis.com/',
       secure: false,
+      pathRewrite: { '^/google': '' },
       changeOrigin: true,
     },
   },
