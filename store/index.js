@@ -4,6 +4,7 @@ import Vuex, { Store } from 'vuex'
 
 import ASEETS_STORE from './modules/assetsStore.js'
 import JOIN_STORE from './modules/joinStore.js'
+import LOCATION_DATA from '~/static/json/location.json'
 
 Vue.use(Vuex)
 const instance = axios.create()
@@ -29,6 +30,7 @@ instance.interceptors.request.use(
 const createStore = () => {
   return new Store({
     state: {
+      LOCATION_CODE: LOCATION_DATA,
       EVENT_DATA: {
         LIST: null,
         MAKERS: [],
@@ -40,33 +42,25 @@ const createStore = () => {
         ko: {
           evnNm: '행사명',
           evnPrd: '행사기간',
-          evnTm: '행사시간 ',
-          evnTel: '연락처 ',
-          evnAtm: '가격 ',
-          evnAddr: '주소 ',
-          evnPlc: '장소 ',
-          evnHmp: '홈페이지 ',
-          evnOrg: '주최자 ',
-          evnOrgTel: '주최자연락처 ',
-          evnOrg2: '주최자2 ',
-          evnOrgTel2: '주최자연락처2 ',
-          evnGrd: '평점 ',
+          evnTm: '행사시간',
+          evnTel: '연락처',
+          evnAtm: '가격',
+          evnAddr: '주소',
+          evnPlc: '장소',
+          evnHmp: '홈페이지',
+          evnOrg: '주최자',
+          evnOrgTel: '주최자연락처',
+          evnOrg2: '주최자2',
+          evnOrgTel2: '주최자연락처2',
+          evnGrd: '평점',
+          evnBasInfo: '기본정보',
+          evnUseInfo: '이용안내',
+          evnDtlInfo: '상세정보',
+          EvnOvrDsc: '축제 개요 설명',
+          EvnRev: '구글리뷰',
+          EvnPt: '점',
         },
-        en: {
-          evnNm: '행사명',
-          evnPrd: '행사기간',
-          evnTm: '행사시간 ',
-          evnTel: '연락처 ',
-          evnAtm: '가격 ',
-          evnAddr: '주소 ',
-          evnPlc: '장소 ',
-          evnHmp: '홈페이지 ',
-          evnOrg: '주최자 ',
-          evnOrgTel: '주최자연락처 ',
-          evnOrg2: '주최자2 ',
-          evnOrgTel2: '주최자연락처2 ',
-          evnGrd: '평점 ',
-        },
+        en: {},
       },
     },
     getters: {},
