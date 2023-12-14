@@ -6,11 +6,12 @@
           <el-carousel>
             <el-carousel-item v-for="item in 4" :key="item">
               <h3 class="small">{{ item }}</h3>
+              <img :src="EVENT_DATA.DETAIL?.detailPhoto" width="200" />
             </el-carousel-item>
           </el-carousel>
         </div>
         <div class="detail-info">
-          <div class="tit">서울한강축제</div>
+          <div class="tit">{{ EVENT_DATA.DETAIL?.title }}</div>
           <div class="info">
             <p class="line">
               <span class="text">서울</span> /
@@ -47,23 +48,31 @@
 </template>
 
 <script>
-// import { mapGetters, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 export default {
-  name: 'MainPage',
-  layout: 'index',
-  data() {
-    return {
-      search: '',
-      activeIndex: '1',
-    }
-  },
-  computed: {},
-  mounted() {},
-  methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath)
+    name: 'MapContentDetail',
+    layout: 'index',
+    data() {
+        return {
+            lang:'ko'
+        }
     },
-  },
+    computed: {
+        ...mapState(['EVENT_DATA'])
+    },
+    created() {
+        console.log('>>', this.$route.query?.place)
+    },
+    mounted() {
+        const params = {
+            contentid: String(this.$route.query?.place)
+        }
+        this.ACTION_MAP_DETAIL(params)
+    },
+    methods: {
+        ...mapMutations(['MUTATIONS_MAP_LIST']),
+        ...mapActions(['ACTION_MAP_DETAIL']),
+    }
 }
 </script>
 

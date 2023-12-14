@@ -4,7 +4,6 @@
       <div class="main-menu">
         <ul class="menu-list">
           <li class="menu-list--item" @click="$router.push('/festival/list')">
-            <router-link to=""></router-link>
             <div class="icon festival"></div>
             <p class="text">축제공연행사</p>
           </li>

@@ -19,9 +19,10 @@
       </div>
       <div class="list-option">
         <div class="left">
-          <button type="button" class="btn btn-check">
-            진행중인 축제만 보기
-          </button>
+          <label class="text-check">
+            <input v-model="inProgress" type="checkbox" true-value="Y" false-value="N" />
+            <span class="text">진행중인 축제만 보기</span>
+          </label>
         </div>
         <div class="right">
           <button type="button" class="btn btn-list"></button>
@@ -30,12 +31,12 @@
         </div>
       </div>
       <ul class="thumb-list">
-        <li v-for="i in 9" :key="i" class="thumb-list--item">
+        <li v-for="(v, i) in EVENT_DATA.LIST" :key="i" class="thumb-list--item">
           <div class="thumb">
-            <img src="../../static/images/Thumbnail.png" alt="" />
+            <img :src="v.firstimage" alt="" />
           </div>
           <div class="text">
-            <div class="tit">서울한강축제</div>
+            <div class="tit">{{ v.title }}</div>
             <div class="info">
               <span>서울</span>
               <span>축제</span>
@@ -43,23 +44,67 @@
           </div>
         </li>
       </ul>
-      <el-backtop target=".wrap"></el-backtop>
     </div>
   </div>
 </template>
 
 <script>
-// import { mapGetters, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
+
+// import imgpath from '~/static/images/logo.svg';
+const seoul = { lat: 37.5642135, lng: 127.0016985 };
+
 export default {
-  name: 'MainPage',
-  layout: 'index',
-  data() {
-    return {
-      search: '',
+    name: 'MapContent',
+    layout: 'index',
+    data() {
+        return {
+            search: '',
+            inProgress:'N',
+            place: 'Singapore',
+            shape: {
+                coords: [10, 10, 10, 15, 15, 15, 15, 10],
+                type: 'poly'
+            },
+            makerImg: {
+                url: 'https://an2-img.amz.wtchn.net/image/v2/gL_DmC5m7rzEdBNnml8ybQ.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1KbklsMHNJbkFpT2lJdmRqSXZjM1J2Y21VdmFXMWhaMlV2TVRZNE1EVXhOVFk1TnpBNE9ERTBOakV3TnlJc0luRWlPamd3TENKM0lqb3hPVEl3ZlEuOEtVTGZueEJKRnllcUlSdzdjZVVCR2dwdjJ4dV9lR2xfVVpIWDNMSGNZcw',
+                scaledSize: { width: 20, height: 20 },
+            },
+            center: seoul,
+            // info window
+            infoWinOpen: false,
+            infoWindowPos: null,
+            currentMidx: null,
+            infoOptions: {
+                content: '',
+                pixelOffset: {
+                    width: 0,
+                    height: -35
+                }
+            },
+        }
+    },
+    computed: {
+        ...mapState(['EVENT_DATA'])
+    },
+    created() {
+        this.ACTION_MAP_LIST()
+    },
+    mounted() {
+    },
+    methods: {
+        ...mapMutations(['MUTATIONS_MAP_LIST']),
+        ...mapActions(['ACTION_MAP_LIST', 'ACTION_MAP_PLACE_ID']),
+
+        onClickToDetail(v, p) {
+            console.log(v)
+            if (v?.place_id) {
+                this.$router.push(`/festival/detail?place=${v?.secretKey}`)
+            } else {
+                this.ACTION_MAP_PLACE_ID(v)
+            }
+        }
     }
-  },
-  computed: {},
-  mounted() {},
 }
 </script>
 
