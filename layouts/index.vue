@@ -27,7 +27,7 @@
 
 <script>
 //  MUTATIONS_LOGIN
-
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'IndexLayout',
   data() {
@@ -37,7 +37,12 @@ export default {
       search: '',
     }
   },
+  computed: {
+    ...mapState(['VIEW_TEXT'])
+  },
   created() {
+    const lang = 'ko'
+    this.MUTATIONS_LANGAGE_SET(lang)
     // const that = this;
     // const checkGauthLoad = setInterval(function () {
     //   that.isInit = that.$gAuth.isInit;
@@ -49,6 +54,7 @@ export default {
     // this.googleInitialize()
   },
   methods: {
+     ...mapMutations(['MUTATIONS_LANGAGE_SET']),
     async handleClickSignIn() {
       try {
         const googleUser = await this.$gAuth.signIn()

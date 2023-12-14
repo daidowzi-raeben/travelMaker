@@ -35,10 +35,47 @@ const createStore = () => {
         DETAIL: {},
         REVIEW: [],
       },
+      VIEW_TEXT: {},
+      TEXT_LIST: {
+        ko: {
+          evnNm: '행사명',
+          evnPrd: '행사기간',
+          evnTm: '행사시간 ',
+          evnTel: '연락처 ',
+          evnAtm: '가격 ',
+          evnAddr: '주소 ',
+          evnPlc: '장소 ',
+          evnHmp: '홈페이지 ',
+          evnOrg: '주최자 ',
+          evnOrgTel: '주최자연락처 ',
+          evnOrg2: '주최자2 ',
+          evnOrgTel2: '주최자연락처2 ',
+          evnGrd: '평점 ',
+        },
+        en: {
+          evnNm: '행사명',
+          evnPrd: '행사기간',
+          evnTm: '행사시간 ',
+          evnTel: '연락처 ',
+          evnAtm: '가격 ',
+          evnAddr: '주소 ',
+          evnPlc: '장소 ',
+          evnHmp: '홈페이지 ',
+          evnOrg: '주최자 ',
+          evnOrgTel: '주최자연락처 ',
+          evnOrg2: '주최자2 ',
+          evnOrgTel2: '주최자연락처2 ',
+          evnGrd: '평점 ',
+        },
+      },
     },
     getters: {},
     mutations: {
       // ----------- intro
+
+      MUTATIONS_LANGAGE_SET(state, payload) {
+        state.VIEW_TEXT = state.TEXT_LIST[payload]
+      },
       MUTATIONS_MAP_DETAIL(state, payload) {
         state.EVENT_DATA.DETAIL = payload.detail
         state.EVENT_DATA.REVIEW = payload.review
