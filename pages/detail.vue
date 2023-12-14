@@ -20,9 +20,13 @@
            <div>평점 : {{ EVENT_DATA.DETAIL?.totalRating }}</div>
        </div>
        
-
-       <div>
-            <div v-for="v,i in EVENT_DATA.REVIEW" :key="i">
+       <div style="margin:20px 0;">
+        <el-button @click="lang='ko'">한국</el-button>
+        <el-button @click="lang='ja'">일본</el-button>
+        <el-button @click="lang='zh'">중국</el-button>
+       </div>
+       <div v-for="v, i in EVENT_DATA.REVIEW" :key="i">
+            <div v-if="v.language.substr(0,2) === lang">
                 <div>
                     <img :src="v.profile_photo_url" width="50">
                 </div>
@@ -48,7 +52,7 @@ export default {
     layout: 'index',
     data() {
         return {
-
+            lang:'ko'
         }
     },
     computed: {
