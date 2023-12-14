@@ -97,7 +97,7 @@ const createStore = () => {
       ACTION_MAP_PLACE_ID({ commit }, params) {
         this.$axios
           .get(
-            `/google/maps/api/place/nearbysearch/json?location=${params?.mapy},${params?.mapx}&radius=1&keyword=${params?.addr1}&key=AIzaSyC5cBSRZj8WX9totSsVBXCbqdhmxkG3ZHk`,
+            `${process.env.VUE_APP_API}?mode=getPlaceId&location=${params?.mapy},${params?.mapx}&radius=1&keyword=${params?.title}`,
             params,
             {
               header: {
