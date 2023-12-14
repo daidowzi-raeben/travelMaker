@@ -31,7 +31,7 @@
         </div>
       </div>
       <ul class="thumb-list" v-bind:class="{ list: listMode == 'list', image: listMode == 'image' }">
-        <li v-for="(v, i) in EVENT_DATA.LIST" :key="i" class="thumb-list--item">
+        <li v-for="(v, i) in EVENT_DATA.LIST" :key="i" class="thumb-list--item" @click="onClickToDetail(v)">
           <div class="thumb">
             <img :src="v.firstimage" alt="" />
           </div>
@@ -65,26 +65,26 @@
         </div>
         <div class="input-label">지역</div>
         <div class="input-wrap">
-          <el-select v-model="value" placeholder="Select">
+          <el-select  placeholder="시/도" :value="location.do" @change="onChangeGuData">
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="(v,i) in LOCATION_CODE.do"
+              :key="i"
+              :label="v.doName"
+              :value="v.doCode">
             </el-option>
           </el-select>
-          <el-select v-model="value" placeholder="Select">
+          <el-select  placeholder="시/군/구" :value="location.gu" @change="onChangeLocation">
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="(v, i) in LOCATION_CODE[`gu${location.do}`]"
+              :key="i"
+              :label="v.guName"
+              :value="v.guCode">
             </el-option>
           </el-select>
         </div>
         <div class="input-label">분류</div>
         <div class="input-wrap">
-          <el-select v-model="value" placeholder="Select">
+          <el-select v-model="value" placeholder="대분류">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -92,7 +92,7 @@
               :value="item.value">
             </el-option>
           </el-select>
-          <el-select v-model="value" placeholder="Select">
+          <el-select v-model="value" placeholder="소분류">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -145,6 +145,11 @@ export default {
             }],
             value: '',
 
+            location: {
+                do: '',
+                gu : '',
+            },
+
             filterModalShow: false,
 
             place: 'Singapore',
@@ -171,10 +176,11 @@ export default {
         }
     },
     computed: {
-        ...mapState(['EVENT_DATA'])
+        ...mapState(['EVENT_DATA']),
+        ...mapState(['LOCATION_CODE'])
     },
     created() {
-        this.ACTION_MAP_LIST()
+        this.ACTION_MAP_LIST();
     },
     mounted() {
     },
@@ -189,6 +195,14 @@ export default {
             } else {
                 this.ACTION_MAP_PLACE_ID(v)
             }
+        },
+
+        onChangeGuData(v) {
+            this.location.do = v
+            this.location.gu = ''
+        },
+        onChangeLocation(v) {
+            this.location.gu = v
         }
     }
 }

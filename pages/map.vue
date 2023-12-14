@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div class="wrap">
 
         <!-- <gmap-place-input :default-place="place"@place_changed="setPlace">
    </gmap-place-input> -->
-        <gmap-map ref="googleMap" :center="center" :zoom="12" style="width: 100%; height: 500px">
+        <gmap-map ref="googleMap" :center="center" :zoom="12" style="width: 100%; height: calc(100vh - 47px)">
             <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen"
                 @closeclick="infoWinOpen = false">
             </gmap-info-window>
@@ -14,7 +14,7 @@
             </gmap-cluster>
         </gmap-map>
         <!-- {{ EVENT_DATA.MAKERS }} -->
-        <div>
+        <!-- <div>
             <table>
                 <template v-for="(v, i) in EVENT_DATA.LIST">
                     <tr :key="i" @click="onClickToDetail(v)">
@@ -29,7 +29,9 @@
                     </tr>
                 </template>
             </table>
-        </div>
+        </div> -->
+
+    <router-link to="/festival/list" class="bottom-btn"><span class="icon icon-list"></span>리스트보기</router-link>
     </div>
 </template>
 
@@ -51,7 +53,7 @@ export default {
             },
             makerImg: {
                 url: 'https://an2-img.amz.wtchn.net/image/v2/gL_DmC5m7rzEdBNnml8ybQ.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1KbklsMHNJbkFpT2lJdmRqSXZjM1J2Y21VdmFXMWhaMlV2TVRZNE1EVXhOVFk1TnpBNE9ERTBOakV3TnlJc0luRWlPamd3TENKM0lqb3hPVEl3ZlEuOEtVTGZueEJKRnllcUlSdzdjZVVCR2dwdjJ4dV9lR2xfVVpIWDNMSGNZcw',
-                scaledSize: { width: 20, height: 20 },
+                scaledSize: { width: 30, height: 30 },
             },
             center: seoul,
             // info window

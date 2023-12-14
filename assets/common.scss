@@ -11,7 +11,7 @@ ul {
   background:linear-gradient(135deg, #5345db 50%, #4132cf 50%);
   border-radius: 35px;
   position:fixed;
-  right:20px;
+  left:20px;
   bottom:20px;
   color:#fff;
   font-weight: 600;
@@ -29,6 +29,9 @@ ul {
     margin-bottom:3px;
     &-map{
       background:url(../static/images/map.svg)no-repeat center / 100%;
+    }
+    &-list{
+      background:url(../static/images/view_grid.svg)no-repeat center / 100%;
     }
   }
 }
@@ -68,6 +71,27 @@ ul {
     width: 28px;
     height: 28px;
     background: url(../static/images/list.svg) no-repeat center / 100%;
+    &--list{
+      margin-top:30px;
+      .item{
+        margin-bottom:20px;
+        .btn{
+          color:$textCol1;
+          font-size:20px;
+          width:100%;
+          font-weight: 600;
+        }
+      }
+    }
+    &--top{
+      text-align: right;
+      color:#999;
+      .el-select{
+        width:120px;
+        display:block;
+        margin:5px 0 0 auto;
+      }
+    }
   }
   &-logo {
     width: 120px;
@@ -137,6 +161,16 @@ ul {
         &:last-child {
           margin-right: 0;
         }
+        .icon{
+          width:71px;
+          height: 62px;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size:100%;
+          &.festival{
+            background-image: url(../static/images/festival.svg);
+          }
+        }
       }
     }
   }
@@ -148,6 +182,14 @@ ul {
       font-size: 18px;
       font-weight: 600;
       margin-bottom: 15px;
+      position:relative;
+      .right{
+        position:absolute;
+        right:0;
+        top:2px;
+        color:#999;
+        font-size:15px;
+      }
       &:before {
         content: '';
         display: block;
@@ -258,6 +300,7 @@ ul {
         width:35%;
         height:77px;
         margin-right:15px;
+        max-width: 120px;
       }
       .text{
         width:calc(65% - 15px);
@@ -360,11 +403,26 @@ ul {
     padding:30px;
     position:absolute;
     width:100%;
+    box-shadow: 0 -10px 20px rgba(000, 000, 000, 0.1);
     &.bottom{
       border-radius: 40px 40px 0 0;
       left:0;
       bottom:0;
-      box-shadow: 0 -10px 20px rgba(000, 000, 000, 0.1);
+    }
+    &.right{
+      height:100%;
+      width:60%;
+      right:0;
+      top:0;
+      border-radius: 40px 0 0 40px;
+      .btn-close{
+        left:-50px;
+        top:20px;
+      }
+      .el-button{
+        float:right;
+        margin-bottom:20px;
+      }
     }
     .btn-close{
       position:absolute;
@@ -438,4 +496,11 @@ ul {
 
 .el-input__inner{
   border-radius: 10px !important;
+}
+
+.el-select .el-input__inner{
+  border-color:#CBCCDB;
+}
+.el-select .el-input .el-select__caret{
+  color:#9294a5 !important;
 }

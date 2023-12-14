@@ -10,7 +10,10 @@
         </ul>
       </div>
       <div class="main-list--wrap">
-        <div class="main-list--tit">지금, 진행중인 축제</div>
+        <div class="main-list--tit">
+          지금, 진행중인 축제
+          <router-link to="/festival/list" class="right">더보기</router-link>
+        </div>
         <ul class="thumb-list">
           <li v-for="i in 4" :key="i" class="thumb-list--item">
             <div class="thumb">
