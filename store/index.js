@@ -44,7 +44,7 @@ const createStore = () => {
           evnPrd: '행사기간',
           evnTm: '행사시간',
           evnTel: '연락처',
-          evnAtm: '가격',
+          evnAmt: '가격',
           evnAddr: '주소',
           evnPlc: '장소',
           evnHmp: '홈페이지',
