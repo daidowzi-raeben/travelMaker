@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="right">
-          <button type="button" class="btn btn-filter">필터</button>
+          <button type="button" class="btn btn-filter" @click="filterModalShow = true">필터</button>
         </div>
       </div>
       <div class="list-option">
@@ -25,12 +25,12 @@
           </label>
         </div>
         <div class="right">
-          <button type="button" class="btn btn-list"></button>
-          <button type="button" class="btn btn-normal active"></button>
-          <button type="button" class="btn btn-image"></button>
+          <button type="button" class="btn btn-list" v-bind:class="{ active: listMode == 'list' }" @click="listMode = 'list'"></button>
+          <button type="button" class="btn btn-normal" v-bind:class="{ active: listMode == 'normal' }" @click="listMode = 'normal'"></button>
+          <button type="button" class="btn btn-image" v-bind:class="{ active: listMode == 'image' }" @click="listMode = 'image'"></button>
         </div>
       </div>
-      <ul class="thumb-list">
+      <ul class="thumb-list" v-bind:class="{ list: listMode == 'list', image: listMode == 'image' }">
         <li v-for="(v, i) in EVENT_DATA.LIST" :key="i" class="thumb-list--item">
           <div class="thumb">
             <img :src="v.firstimage" alt="" />
@@ -38,13 +38,75 @@
           <div class="text">
             <div class="tit">{{ v.title }}</div>
             <div class="info">
-              <span>서울</span>
+              <span>서울</span> /
               <span>축제</span>
             </div>
           </div>
         </li>
       </ul>
     </div>
+    <div class="modal" v-bind:class="{ show: filterModalShow }">
+      <div class="modal-dim" @click="filterModalShow = false"></div>
+      <div class="modal-con bottom">
+        <button type="button" class="btn btn-close" @click="filterModalShow = false">&times;</button>
+        <div class="input-label">날짜</div>
+        <div class="input-wrap">
+          <el-date-picker
+            v-model="date1"
+            type="date"
+            placeholder="날짜선택">
+          </el-date-picker>
+          <span class="text">~</span>
+          <el-date-picker
+            v-model="date2"
+            type="date"
+            placeholder="날짜선택">
+          </el-date-picker>
+        </div>
+        <div class="input-label">지역</div>
+        <div class="input-wrap">
+          <el-select v-model="value" placeholder="Select">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+          <el-select v-model="value" placeholder="Select">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+        <div class="input-label">분류</div>
+        <div class="input-wrap">
+          <el-select v-model="value" placeholder="Select">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+          <el-select v-model="value" placeholder="Select">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+        <div class="btn-wrap">
+          <el-button type="primary">필터적용</el-button>
+        </div>
+      </div>
+    </div>
+    <router-link to="/map" class="bottom-btn"><span class="icon icon-map"></span>지도보기</router-link>
   </div>
 </template>
 
@@ -59,8 +121,32 @@ export default {
     layout: 'index',
     data() {
         return {
+            listMode: 'normal',
             search: '',
             inProgress:'N',
+
+            date1:'',
+            date2:'',
+            options: [{
+              value: 'Option1',
+              label: 'Option1'
+            }, {
+              value: 'Option2',
+              label: 'Option2'
+            }, {
+              value: 'Option3',
+              label: 'Option3'
+            }, {
+              value: 'Option4',
+              label: 'Option4'
+            }, {
+              value: 'Option5',
+              label: 'Option5'
+            }],
+            value: '',
+
+            filterModalShow: false,
+
             place: 'Singapore',
             shape: {
                 coords: [10, 10, 10, 15, 15, 15, 15, 10],
