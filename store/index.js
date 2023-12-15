@@ -5,6 +5,7 @@ import Vuex, { Store } from 'vuex'
 import ASEETS_STORE from './modules/assetsStore.js'
 import JOIN_STORE from './modules/joinStore.js'
 import LOCATION_DATA from '~/static/json/location.json'
+import TEXT_LIST_DATA from '~/static/json/textList.json'
 
 Vue.use(Vuex)
 const instance = axios.create()
@@ -33,35 +34,13 @@ const createStore = () => {
       LOCATION_CODE: LOCATION_DATA,
       EVENT_DATA: {
         LIST: null,
+        LIST_BACK: null,
         MAKERS: [],
         DETAIL: {},
         REVIEW: [],
       },
       VIEW_TEXT: {},
-      TEXT_LIST: {
-        ko: {
-          evnNm: '행사명',
-          evnPrd: '행사기간',
-          evnTm: '행사시간',
-          evnTel: '연락처',
-          evnAmt: '가격',
-          evnAddr: '주소',
-          evnPlc: '장소',
-          evnHmp: '홈페이지',
-          evnOrg: '주최자',
-          evnOrgTel: '주최자연락처',
-          evnOrg2: '주최자2',
-          evnOrgTel2: '주최자연락처2',
-          evnGrd: '평점',
-          evnBasInfo: '기본정보',
-          evnUseInfo: '이용안내',
-          evnDtlInfo: '상세정보',
-          EvnOvrDsc: '축제 개요 설명',
-          EvnRev: '구글리뷰',
-          EvnPt: '점',
-        },
-        en: {},
-      },
+      TEXT_LIST: TEXT_LIST_DATA,
     },
     getters: {},
     mutations: {
@@ -70,12 +49,23 @@ const createStore = () => {
       MUTATIONS_LANGAGE_SET(state, payload) {
         state.VIEW_TEXT = state.TEXT_LIST[payload]
       },
+      MUTATIONS_MAP_LIST_FILTER(state, payload) {
+        if (!payload) {
+          return (state.EVENT_DATA.LIST = state.EVENT_DATA.LIST_BACK)
+        }
+        const filteredData = state.EVENT_DATA.LIST.filter(
+          (data) => data[payload.key] === payload.value
+        )
+
+        state.EVENT_DATA.LIST = filteredData
+      },
       MUTATIONS_MAP_DETAIL(state, payload) {
         state.EVENT_DATA.DETAIL = payload.detail
         state.EVENT_DATA.REVIEW = payload.review
       },
       MUTATIONS_MAP_LIST(state, payload) {
         state.EVENT_DATA.LIST = payload
+        state.EVENT_DATA.LIST_BACK = payload
         payload.forEach((v, i) => {
           const mapData = {
             position: {
@@ -111,8 +101,12 @@ const createStore = () => {
           })
       },
       ACTION_MAP_LIST({ commit }, params) {
+        let str = ''
+        if (params?.str) {
+          str = params.str
+        }
         this.$axios
-          .get(`${process.env.VUE_APP_API}?mode=list`, params, {
+          .get(`${process.env.VUE_APP_API}?mode=list&str=${str}`, params, {
             header: {
               'Context-Type': 'multipart/form-data',
             },
@@ -155,14 +149,16 @@ const createStore = () => {
                 .then((res) => {
                   console.log(res.data)
                   // 라우터 이동
-                  this.$router.push(`/detail?place=${params?.secretKey}`)
+                  this.$router.push(
+                    `/festival/detail?place=${params?.secretKey}`
+                  )
                   // commit('MUTATIONS_MAP_PLACE_ID', res.data)
                 })
                 .catch((res) => {
                   console.log('AXIOS FALSE', res)
                 })
             } else {
-              this.$router.push(`/detail?place=${params?.secretKey}`)
+              this.$router.push(`/festival/detail?place=${params?.secretKey}`)
             }
           })
           .catch((res) => {
