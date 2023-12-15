@@ -36,6 +36,7 @@ const createStore = () => {
         LIST: null,
         LIST_BACK: null,
         MAKERS: [],
+        MAKERS_LIST: [],
         DETAIL: {},
         REVIEW: [],
       },
@@ -62,6 +63,19 @@ const createStore = () => {
       MUTATIONS_MAP_DETAIL(state, payload) {
         state.EVENT_DATA.DETAIL = payload.detail
         state.EVENT_DATA.REVIEW = payload.review
+      },
+      MUTATIONS_MAP_MAKERS_LIST(state, payload) {
+        state.EVENT_DATA.MAKERS_LIST = []
+
+        const filteredData = state.EVENT_DATA.MAKERS.filter(
+          (data) =>
+            data.position.lng >= payload.La.lo &&
+            data.position.lng <= payload.La.hi &&
+            data.position.lat >= payload.eb.lo &&
+            data.position.lat <= payload.eb.hi
+        )
+
+        state.EVENT_DATA.MAKERS_LIST = filteredData
       },
       MUTATIONS_MAP_LIST(state, payload) {
         state.EVENT_DATA.LIST = payload
