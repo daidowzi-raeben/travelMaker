@@ -32,11 +32,12 @@
             @click="onClickListMode('image')"></button>
         </div>
       </div>
-      <ul class="thumb-list" :class="{ list: listMode == 'list', image: listMode == 'image' }">
+      <ul v-if="EVENT_DATA.LIST != ''" class="thumb-list" :class="{ list: listMode == 'list', image: listMode == 'image' }">
         <template v-for="(v, i) in EVENT_DATA.LIST">
         <li v-if="i < isRowItemCnt * isPage"  :key="i" class="thumb-list--item" @click="onClickToDetail(v)">
            <div class="thumb">
-              <img :src="v.firstimage" alt="" />
+              <img v-if="v.firstimage" :src="v.firstimage" alt="" />
+              <img v-else src="../../static/images/Thumbnail.svg" alt="" />
             </div>
             <div class="text">
               <div class="tit">{{ v.title }}</div>
@@ -48,6 +49,10 @@
           </li>
         </template>
       </ul>
+      <div v-else class="nodata">
+        <img src="../../static/images/nodata.svg" alt="" />
+        데이터가 없어요.
+      </div>
     </div>
     <div class="modal" v-bind:class="{ show: filterModalShow }">
       <div class="modal-dim" @click="filterModalShow = false"></div>
