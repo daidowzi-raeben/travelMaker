@@ -12,8 +12,8 @@ export default {
     fallback: true,
   },
   head: {
-    titleTemplate: '%s - TRAVEL POINT',
-    title: 'TRAVEL POINT',
+    titleTemplate: '%s - TRIP POINT',
+    title: 'TRIP POINT',
     htmlAttrs: {
       lang: 'ko',
     },

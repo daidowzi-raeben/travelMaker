@@ -77,7 +77,7 @@ export default {
   },
   head() {
     return {
-    title : `${this.EVENT_DATA.DETAIL?.title} - TRAVEL POINT`
+    title : `${this.EVENT_DATA.DETAIL?.title} - TRIP POINT`
   }
  },
   computed: {
