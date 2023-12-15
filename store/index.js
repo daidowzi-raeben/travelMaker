@@ -66,6 +66,7 @@ const createStore = () => {
       MUTATIONS_MAP_LIST(state, payload) {
         state.EVENT_DATA.LIST = payload
         state.EVENT_DATA.LIST_BACK = payload
+        state.EVENT_DATA.MAKERS = []
         payload.forEach((v, i) => {
           const mapData = {
             position: {
