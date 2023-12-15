@@ -50,9 +50,24 @@
         </div>
         <div class="">
           <!-- <el-skeleton :rows="10" /> -->
+          <div v-for="v,i in EVENT_DATA.PHOTOS" :key="i">
+            <img :src="v.imgUrl" width="100%"/>
+          </div>
         </div>
         <div class="">
-          <!-- <el-skeleton :rows="10" /> -->
+                 <div v-for="v, i in EVENT_DATA.REVIEW" :key="i">
+              <div v-if="v.language.substr(0, 2) === lang">
+                  <div>
+                      <img :src="v.profile_photo_url" width="50">
+                  </div>
+              <div>
+                  작성자 : {{ v.author_name }} ({{ v.relative_time_description }}) / 별점: {{ v.rating }}
+              </div>
+              <div>
+                  {{ v.text }}
+              </div>
+              </div>
+         </div>
         </div>
       </div>
     </div>

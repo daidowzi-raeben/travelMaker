@@ -229,7 +229,7 @@ export default {
       const isHeight = window.innerHeight + window.scrollY
       // this.isThow = true
       // console.log(docuHeight, isHeight)
-      if (this.isThow === true && docuHeight === isHeight) {
+      if (this.isThow === true && docuHeight - 200 < isHeight) {
         this.isPage++
         this.isThow = false
         setTimeout(() => {
