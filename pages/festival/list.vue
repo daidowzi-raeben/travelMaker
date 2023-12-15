@@ -5,10 +5,10 @@
         <div class="left">
           <div class="search-wrap">
             <form @submit.prevent="onClickListSearch">
-            <el-input v-model="search" placeholder="가고싶은 곳을 검색해보세요"></el-input>
-            <button type="submit" class="btn search-btn" >
-              <i class="el-icon-search"></i>
-            </button>
+              <el-input v-model="search" placeholder="가고싶은 곳을 검색해보세요"></el-input>
+              <button type="submit" class="btn search-btn">
+                <i class="el-icon-search"></i>
+              </button>
             </form>
           </div>
         </div>
@@ -165,8 +165,13 @@ export default {
       },
     }
   },
+  head() {
+    return {
+      title: '트립포인트 행사/축제 목록 보기'
+    }
+  },
   computed: {
-    ...mapState(['EVENT_DATA','VIEW_TEXT']),
+    ...mapState(['EVENT_DATA', 'VIEW_TEXT']),
     ...mapState(['LOCATION_CODE'])
   },
   created() {
@@ -178,13 +183,13 @@ export default {
     if (localStorage.getItem('listMode')) this.onClickListMode(localStorage.getItem('listMode'))
 
     // 인피니티 스크롤
-     document.addEventListener('scroll', this.handlerScrollEvents);
+    document.addEventListener('scroll', this.handlerScrollEvents);
   },
   unmounted() {
-     document.removeEventListener('scroll', this.handlerScrollEvents);
+    document.removeEventListener('scroll', this.handlerScrollEvents);
   },
   methods: {
-    ...mapMutations(['MUTATIONS_MAP_LIST','MUTATIONS_MAP_LIST_FILTER']),
+    ...mapMutations(['MUTATIONS_MAP_LIST', 'MUTATIONS_MAP_LIST_FILTER']),
     ...mapActions(['ACTION_MAP_LIST', 'ACTION_MAP_PLACE_ID']),
 
     onClickToDetail(v, p) {
@@ -207,13 +212,13 @@ export default {
       this.listMode = v
       localStorage.setItem('listMode', v)
     },
-    onChangeInProgress({target}) {
+    onChangeInProgress({ target }) {
       console.log(target.checked)
       const filterParams = {
         key: 'isNow',
-        value : 'Y'
+        value: 'Y'
       }
-      if(target.checked === true) {
+      if (target.checked === true) {
         this.MUTATIONS_MAP_LIST_FILTER(filterParams)
       } else {
         this.MUTATIONS_MAP_LIST_FILTER()
@@ -221,9 +226,9 @@ export default {
     },
     onClickListSearch() {
       const params = {
-        str : this.search
+        str: this.search
       }
-      if(this.search) {
+      if (this.search) {
         this.ACTION_MAP_LIST(params)
       } else {
         this.ACTION_MAP_LIST()

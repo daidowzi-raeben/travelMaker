@@ -83,6 +83,11 @@ export default {
             },
         }
     },
+     head() {
+        return {
+            title: '트립포인트 지도 보기'
+        }
+    },
     computed: {
         ...mapState(['EVENT_DATA'])
     },

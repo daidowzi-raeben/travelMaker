@@ -6,7 +6,8 @@
           <el-carousel>
             <el-carousel-item v-for="item in 4" :key="item">
               <h3 class="small">{{ item }}</h3>
-              <img :src="EVENT_DATA.PHOTOS && EVENT_DATA.PHOTOS[item] ? EVENT_DATA.PHOTOS[item]?.imgUrl : ''" height="100%" />
+              <img :src="EVENT_DATA.PHOTOS && EVENT_DATA.PHOTOS[item] ? EVENT_DATA.PHOTOS[item]?.imgUrl : ''"
+                height="100%" />
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -41,8 +42,8 @@
           <div>홈페이지 : {{ EVENT_DATA.DETAIL?.eventhomepage }}</div>
           <div>연락처 : {{ EVENT_DATA.DETAIL?.sponsor1tel }}</div>
           <div>행사기간 : {{ EVENT_DATA.DETAIL?.eventstartdate }} ~ {{ EVENT_DATA.DETAIL?.eventenddate }}</div>
-             <div>행사시간 : <span v-html="EVENT_DATA.DETAIL?.playtime"></span></div>
-             <div>연령제한 : {{ EVENT_DATA.DETAIL?.agelimit }}</div>
+          <div>행사시간 : <span v-html="EVENT_DATA.DETAIL?.playtime"></span></div>
+          <div>연령제한 : {{ EVENT_DATA.DETAIL?.agelimit }}</div>
 
         </div>
         <div class="">
@@ -50,24 +51,24 @@
         </div>
         <div class="">
           <!-- <el-skeleton :rows="10" /> -->
-          <div v-for="v,i in EVENT_DATA.PHOTOS" :key="i">
-            <img :src="v.imgUrl" width="100%"/>
+          <div v-for="v, i in EVENT_DATA.PHOTOS" :key="i">
+            <img :src="v.imgUrl" width="100%" />
           </div>
         </div>
         <div class="">
-                 <div v-for="v, i in EVENT_DATA.REVIEW" :key="i">
-              <div v-if="v.language.substr(0, 2) === lang">
-                  <div>
-                      <img :src="v.profile_photo_url" width="50">
-                  </div>
+          <div v-for="v, i in EVENT_DATA.REVIEW" :key="i">
+            <div v-if="v.language.substr(0, 2) === lang">
               <div>
-                  작성자 : {{ v.author_name }} ({{ v.relative_time_description }}) / 별점: {{ v.rating }}
+                <img :src="v.profile_photo_url" width="50">
               </div>
               <div>
-                  {{ v.text }}
+                작성자 : {{ v.author_name }} ({{ v.relative_time_description }}) / 별점: {{ v.rating }}
               </div>
+              <div>
+                {{ v.text }}
               </div>
-         </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -92,9 +93,9 @@ export default {
   },
   head() {
     return {
-    title : `${this.EVENT_DATA.DETAIL?.title} - TRIP POINT`
-  }
- },
+      title: `${this.EVENT_DATA.DETAIL?.title}`
+    }
+  },
   computed: {
     ...mapState(['EVENT_DATA', 'VIEW_TEXT'])
   },
