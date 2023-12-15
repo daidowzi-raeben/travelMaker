@@ -39,6 +39,7 @@ const createStore = () => {
         MAKERS_LIST: [],
         DETAIL: {},
         REVIEW: [],
+        PHOTOS: [],
       },
       VIEW_TEXT: {},
       TEXT_LIST: TEXT_LIST_DATA,
@@ -63,6 +64,7 @@ const createStore = () => {
       MUTATIONS_MAP_DETAIL(state, payload) {
         state.EVENT_DATA.DETAIL = payload.detail
         state.EVENT_DATA.REVIEW = payload.review
+        state.EVENT_DATA.PHOTOS = payload.photos
       },
       MUTATIONS_MAP_MAKERS_LIST(state, payload) {
         state.EVENT_DATA.MAKERS_LIST = []

@@ -12,8 +12,8 @@ export default {
     fallback: true,
   },
   head: {
-    titleTemplate: '%s - MAKER',
-    title: 'Project Koo',
+    titleTemplate: '%s - TRAVEL POINT',
+    title: 'TRAVEL POINT',
     htmlAttrs: {
       lang: 'ko',
     },

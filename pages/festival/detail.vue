@@ -6,7 +6,7 @@
           <el-carousel>
             <el-carousel-item v-for="item in 4" :key="item">
               <h3 class="small">{{ item }}</h3>
-              <img :src="EVENT_DATA.DETAIL?.detailPhoto" width="200" />
+              <img :src="EVENT_DATA.PHOTOS && EVENT_DATA.PHOTOS[item] ? EVENT_DATA.PHOTOS[item]?.imgUrl : ''" height="100%" />
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -36,6 +36,14 @@
         </el-menu>
         <div class="">
           <!-- <el-skeleton :rows="10" /> -->
+          <div>행사명 : {{ EVENT_DATA.DETAIL?.title }}</div>
+          <div>주소 : {{ EVENT_DATA.DETAIL?.addr1 }} {{ EVENT_DATA.DETAIL?.addr2 }}</div>
+          <div>홈페이지 : {{ EVENT_DATA.DETAIL?.eventhomepage }}</div>
+          <div>연락처 : {{ EVENT_DATA.DETAIL?.sponsor1tel }}</div>
+          <div>행사기간 : {{ EVENT_DATA.DETAIL?.eventstartdate }} ~ {{ EVENT_DATA.DETAIL?.eventenddate }}</div>
+             <div>행사시간 : <span v-html="EVENT_DATA.DETAIL?.playtime"></span></div>
+             <div>연령제한 : {{ EVENT_DATA.DETAIL?.agelimit }}</div>
+
         </div>
         <div class="">
           <!-- <el-skeleton :rows="10" /> -->
@@ -67,6 +75,11 @@ export default {
       lang: 'ko'
     }
   },
+  head() {
+    return {
+    title : `${this.EVENT_DATA.DETAIL?.title} - TRAVEL POINT`
+  }
+ },
   computed: {
     ...mapState(['EVENT_DATA', 'VIEW_TEXT'])
   },
