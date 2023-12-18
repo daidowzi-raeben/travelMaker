@@ -31,6 +31,7 @@ instance.interceptors.request.use(
 const createStore = () => {
   return new Store({
     state: {
+      IS_LOADING: false,
       LOCATION_CODE: LOCATION_DATA,
       EVENT_DATA: {
         LIST: null,

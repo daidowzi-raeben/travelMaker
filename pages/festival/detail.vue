@@ -11,13 +11,15 @@
           </el-carousel>
         </div>
         <div class="detail-info">
+          {{ indexOffset }}
           <div class="tit">{{ EVENT_DATA.DETAIL?.title }}</div>
           <div class="info">
             <p class="line">
               <span class="text">서울</span> /
               <span class="text">축제</span>
               <span class="text">
-                <el-rate disabled show-score text-color="#000" :colors="['#fff', '#fff', '#5345DB']" :score-template="`{value} ${VIEW_TEXT.EvnPt}`"
+                <el-rate disabled show-score text-color="#000" :colors="['#fff', '#fff', '#5345DB']"
+                  :score-template="`{value} ${VIEW_TEXT.EvnPt}`"
                   :value="EVENT_DATA.DETAIL?.totalRating ? Number(EVENT_DATA.DETAIL?.totalRating) : 0">
                 </el-rate>
               </span>
@@ -27,7 +29,8 @@
             </p>
           </div>
         </div>
-        <el-menu :default-active="activeIndex" class="el-menu-demo sticky" mode="horizontal" @select="handleSelect">
+        <el-menu id="detailHeader" :default-active="activeIndex" class="el-menu-demo sticky" mode="horizontal"
+          @select="handleSelect">
           <el-menu-item index="0">{{ VIEW_TEXT.evnBasInfo }}</el-menu-item>
           <el-menu-item index="1">{{ VIEW_TEXT.evnUseInfo }}</el-menu-item>
           <el-menu-item index="2">{{ VIEW_TEXT.EvnRev }}</el-menu-item>
@@ -99,25 +102,25 @@
             </tr>
           </table>
         </div>
-        <div class="detail-con" ref="index2">
+        <div ref="index2" class="detail-con">
           <div class="detail-con--tit">
             구글리뷰
             <router-link to="" class="right">더보기</router-link>
           </div>
-          <div class="review-wrap" v-for="v, i in EVENT_DATA.REVIEW" :key="i">
+          <div v-for="v, i in EVENT_DATA.REVIEW" :key="i" class="review-wrap">
             <div v-if="v.language.substr(0, 2) === lang">
               <div class="info">
                 <div class="img">
                   <img :src="v.profile_photo_url" width="50">
                 </div>
                 <div>
-                <div class="text">
-                  작성자 : {{ v.author_name }} ({{ v.relative_time_description }}) <br />
-                  <el-rate disabled show-score text-color="#000" :colors="['#fff', '#fff', '#5345DB']" :score-template="`{value} ${VIEW_TEXT.EvnPt}`"
-                  :value="Number(v.rating)">
-                </el-rate>
+                  <div class="text">
+                    작성자 : {{ v.author_name }} ({{ v.relative_time_description }}) <br />
+                    <el-rate disabled show-score text-color="#000" :colors="['#fff', '#fff', '#5345DB']"
+                      :score-template="`{value} ${VIEW_TEXT.EvnPt}`" :value="Number(v.rating)">
+                    </el-rate>
+                  </div>
                 </div>
-              </div>
               </div>
               <div class="con">
                 {{ v.text }}
@@ -166,13 +169,15 @@ export default {
   created() {
     console.log('>>', this.$route.query?.place)
   },
-  mounted() {
+  async mounted() {
     const params = {
       contentid: String(this.$route.query?.place)
     }
-    this.ACTION_MAP_DETAIL(params)
-    document.addEventListener('scroll', this.scrollHandler)
-    this.indexOffsetSeting()
+    await this.ACTION_MAP_DETAIL(params)
+    this.$nextTick(() => {
+      document.addEventListener('scroll', this.scrollHandler)
+      this.indexOffsetSeting()
+    })
   },
   unmounted() {
     document.removeEventListener('scroll', this.scrollHandler)
@@ -181,43 +186,42 @@ export default {
     ...mapMutations(['MUTATIONS_MAP_LIST']),
     ...mapActions(['ACTION_MAP_DETAIL']),
     handleSelect(key, keyPath) {
-      if(key === '0'){
-        this.$refs.index0.scrollIntoView({ block: "end", behavior: "smooth" })
-      }
-      else if(key === '1'){
-        this.$refs.index1.scrollIntoView({ block: "start", behavior: "smooth" })
-      }
-      else if(key === '2'){
-        this.$refs.index2.scrollIntoView({ block: "start", behavior: "smooth" })
-      }
-      else if(key === '3'){
-        this.$refs.index3.scrollIntoView({ block: "start", behavior: "smooth" })
-      }
+      if (!key) return
+      const keyVal = Number(key)
+      // this.indexOffsetSeting()
+      window.scroll({
+        top: this.indexOffset[keyVal],
+        left: 0,
+        behavior: 'smooth'
+      });
+
     },
-    indexOffsetSeting(){
+    indexOffsetSeting() {
       const headerHeight = document.querySelector('.header').offsetHeight
-      this.indexOffset[0] = this.$refs.index0.offsetTop - headerHeight
-      this.indexOffset[1] = this.$refs.index1.offsetTop - headerHeight
-      this.indexOffset[2] = this.$refs.index2.offsetTop - headerHeight
-      this.indexOffset[3] = this.$refs.index3.offsetTop - headerHeight
+      const headerTab = document.getElementById('detailHeader').offsetHeight
+      this.indexOffset[0] = this.$refs.index0.offsetTop - headerHeight - headerTab
+      this.indexOffset[1] = this.$refs.index1.offsetTop - headerHeight - headerTab
+      this.indexOffset[2] = this.$refs.index2.offsetTop - headerHeight - headerTab
+      this.indexOffset[3] = this.$refs.index3.offsetTop - headerHeight - headerTab
+
+
     },
     scrollHandler() {
-      const scrollTop = document.documentElement.scrollTop;
-      if(this.indexOffset[0] <= scrollTop && scrollTop < this.indexOffset[1]){
-        this.activeIndex = '0'
-      }
-      else if(this.indexOffset[1] <= scrollTop && scrollTop < this.indexOffset[2]){
-        this.activeIndex = '1'
-      }
-      else if(this.indexOffset[2] <= scrollTop && scrollTop < this.indexOffset[3]){
-        this.activeIndex = '2'
-      }
-      else if(this.indexOffset[3] <= scrollTop){
-        this.activeIndex = '3'
-      }
-      else{
-        this.activeIndex = '0'
-      }
+      this.indexOffsetSeting()
+      this.$nextTick(() => {
+        const nowScroll = window.scrollY
+        const isOffsetTop = []
+        const isClientHeight = []
+        this.indexOffset.forEach((v, i) => {
+          isOffsetTop[i] = this.$refs[`index${i}`].offsetTop
+          isClientHeight[i] = this.$refs[`index${i}`].clientHeight + isOffsetTop[i]
+          if (nowScroll >= isOffsetTop[i] && nowScroll <= isClientHeight[i]) {
+            this.activeIndex = String(i)
+          }
+          // console.log(isOffsetTop[i], isClientHeight[i], nowScroll)
+        });
+      })
+
     },
   }
 }
