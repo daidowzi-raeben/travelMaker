@@ -3,15 +3,8 @@
 
         <!-- <gmap-place-input :default-place="place"@place_changed="setPlace">
    </gmap-place-input> -->
-   <div style="position:absolute; top:100px; background:yellow; padding:20px; z-index:9999;">
-    <h3>근처목록</h3>
-<div v-for="v,i in EVENT_DATA.MAKERS_LIST" :key="i">
-<div @click="onClickListToCenter(v)">
-    {{ v.detailData.title }}
-</div>
-</div>
-</div>
-        <gmap-map ref="googleMap" :center="center" :zoom="zoom" style="width: 100%; height: calc(100vh - 47px)"
+   <div class="map-wrap" ref="map">
+        <gmap-map ref="googleMap" :center="center" :zoom="zoom" class="map-view"
             @bounds_changed="onChangeMap" @dragend="onLoadMapData" @tilesloaded="tilesloaded">
             <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen"
                 @closeclick="infoWinOpen = false">
@@ -22,6 +15,20 @@
                 </gmap-marker>
             </gmap-cluster>
         </gmap-map>
+        <div class="map-list">
+            <div class="map-list--tit">근처 목록</div>
+            <div v-for="v,i in EVENT_DATA.MAKERS_LIST" :key="i" class="item" @click="onClickListToCenter(v)">
+                <div class="img-wrap">
+                    <img v-if="v.detailData.firstimage" :src="v.detailData.firstimage" alt="" />
+                    <img v-else src="../static/images/Thumbnail.svg" alt="" />
+                </div>
+                <div class="txt-wrap">
+                    <div class="tit">{{ v.detailData.title }}</div>
+                    {{ LOCATION_CODE[`do${v.detailData.areacode}`] }} / 축제
+                </div>
+            </div>
+        </div>
+    </div>
         <!-- {{ EVENT_DATA.MAKERS }} -->
         <!-- <div>
             <table>
@@ -89,7 +96,8 @@ export default {
         }
     },
     computed: {
-        ...mapState(['EVENT_DATA'])
+        ...mapState(['EVENT_DATA']),
+        ...mapState(['LOCATION_CODE'])
     },
     created() {
         this.ACTION_MAP_LIST()
@@ -168,11 +176,12 @@ export default {
             }
         },
         onClickListToCenter(v) {
-              this.$refs.googleMap.panTo({
-                lat: v.position.lat,
-                lng: v.position.lng
-              });
+            this.$refs.googleMap.panTo({
+            lat: v.position.lat,
+            lng: v.position.lng
+            });
             this.zoom = 17
+            // this.$refs.map.scrollIntoView({ behavior: 'smooth' })
         }
     }
 }

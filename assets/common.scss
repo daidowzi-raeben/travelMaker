@@ -11,7 +11,7 @@ ul {
   background:linear-gradient(135deg, #5345db 50%, #4132cf 50%);
   border-radius: 35px;
   position:fixed;
-  left:20px;
+  right:20px;
   bottom:20px;
   color:#fff;
   font-weight: 600;
@@ -20,6 +20,7 @@ ul {
   justify-content: center;
   flex-direction: column;
   font-size:12px;
+  z-index: 5;
   &:hover{
     color:#fff;
   }
@@ -562,6 +563,75 @@ ul {
   }
 }
 
+.map{
+  &-wrap{
+    display:flex;
+    flex-direction: column;
+    height:calc(100vh - 50px);
+    overflow:auto;
+    background-color:#fff;
+  }
+  &-view{
+    width:100%;
+    min-height: 50%;
+    height:100%;
+    transition:height .3s;
+  }
+  &-list{
+    height:fit-content;
+    background-color:#fff;
+    padding:30px;
+    box-shadow: 0 -10px 20px rgba(000, 000, 000, 0.2);
+    z-index: 1;
+    // overflow-y:auto;
+    &--tit{
+      font-size:18px;
+      font-weight: 600;
+      margin-bottom:20px;
+    }
+    .item{
+      display:flex;
+      margin-bottom:15px;
+      padding-bottom:15px;
+      border-bottom:1px solid #CBCCDB;
+      align-items: center;
+      &:last-child{
+        border-bottom:none;
+        padding-bottom:30px;
+      }
+      .img-wrap{
+        width:30%;
+        min-width: 30%;
+        max-width: 30%;
+        height: 60px;
+        background-color:#000;
+        margin-right:15px;
+        img {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .txt-wrap{
+        color:#999;
+        .tit{
+          font-size:16px;
+          font-weight: 600;
+          color:$textCol1;
+          margin-bottom: 5px;
+          max-height: 41px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          word-break: keep-all;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+      }
+    }
+  }
+}
+
 .nodata{
   display:flex;
   flex-direction: column;
@@ -648,4 +718,34 @@ ul {
   font-size:16px;
   flex:1;
   text-align: center;
+}
+
+.gm-style .gm-style-iw-c{
+  padding:20px;
+  .gm-style-iw-d > div{
+    display:flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    img{
+      width:50px;
+      height: 50px;
+      margin-right:10px;
+    }
+  }
+  i{
+    font-size:14px;
+    font-style: normal;
+    font-weight: 600;
+    word-break: keep-all;
+  }
+  button{
+    outline:none;
+    top:0 !important;
+    right:0 !important;
+    span{
+      width:18px !important;
+      height:18px !important;
+      background-size:100% !important;
+    }
+  }
 }
