@@ -4,10 +4,16 @@
       <div class="detail-wrap">
         <div class="detail-img">
           <el-carousel :autoplay="false" arrow="always">
-            <el-carousel-item v-for="item in 4" :key="item">
-              <img :src="EVENT_DATA.PHOTOS && EVENT_DATA.PHOTOS[item] ? EVENT_DATA.PHOTOS[item]?.imgUrl : ''"
+            <el-carousel-item v-for="item in EVENT_DATA.PHOTOS_COMN.length > 3 ? 4 : EVENT_DATA.PHOTOS_COMN.length" :key="`comn${item}`">
+              <img v-if="EVENT_DATA.PHOTOS_COMN && EVENT_DATA.PHOTOS_COMN[item-1] && EVENT_DATA.PHOTOS_COMN[item-1]?.originimgurl" :src="EVENT_DATA.PHOTOS_COMN && EVENT_DATA.PHOTOS_COMN[item-1] ? EVENT_DATA.PHOTOS_COMN[item-1]?.originimgurl : ''"
                 height="100%" />
             </el-carousel-item>
+            <template v-if="EVENT_DATA.PHOTOS_COMN.length === 0">
+            <el-carousel-item v-for="item in EVENT_DATA.PHOTOS.length > 3 ? 4 : EVENT_DATA.PHOTOS.length" :key="item">
+              <img v-if="EVENT_DATA.PHOTOS && EVENT_DATA.PHOTOS[item] &&  EVENT_DATA.PHOTOS[item]?.imgUrl" :src="EVENT_DATA.PHOTOS && EVENT_DATA.PHOTOS[item] ? EVENT_DATA.PHOTOS[item]?.imgUrl : ''"
+                height="100%" />
+            </el-carousel-item>
+            </template>
           </el-carousel>
         </div>
         <div class="detail-info">
@@ -52,19 +58,25 @@
             <tr>
               <th>우편번호</th>
               <td>
-                우편번호데이터확인
+                 {{ EVENT_DATA.DETAIL?.comn_zipcode }}
+              </td>
+            </tr>
+            <tr>
+              <th>주최자</th>
+              <td>
+                {{ EVENT_DATA.DETAIL?.comn_telname }}
               </td>
             </tr>
             <tr>
               <th>전화번호</th>
               <td>
-                {{ EVENT_DATA.DETAIL?.sponsor1tel }}
+                {{ EVENT_DATA.DETAIL?.comn_tel }}
               </td>
             </tr>
             <tr>
               <th>홈페이지</th>
               <td>
-                {{ EVENT_DATA.DETAIL?.eventhomepage }}
+                <div v-html="EVENT_DATA.DETAIL?.comn_homepage"></div>
               </td>
             </tr>
           </table>
@@ -130,9 +142,10 @@
         </div>
         <div class="detail-con" ref="index3">
           <div class="detail-con--tit">상세정보</div>
-          <div v-for="v, i in EVENT_DATA.PHOTOS" :key="i">
+          <div v-html="EVENT_DATA.DETAIL?.comn_overview"></div>
+          <!-- <div v-for="v, i in EVENT_DATA.PHOTOS" :key="i">
             <img :src="v.imgUrl" width="100%" />
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -182,6 +195,9 @@ export default {
   unmounted() {
     document.removeEventListener('scroll', this.scrollHandler)
   },
+  beforeMount() {
+    document.removeEventListener('scroll', this.scrollHandler)
+  },
   methods: {
     ...mapMutations(['MUTATIONS_MAP_LIST']),
     ...mapActions(['ACTION_MAP_DETAIL']),
@@ -197,17 +213,21 @@ export default {
 
     },
     indexOffsetSeting() {
+      
       const headerHeight = document.querySelector('.header').offsetHeight
-      const headerTab = document.getElementById('detailHeader').offsetHeight
+      let headerTab = 0
+      if(document.getElementById('detailHeader')) headerTab =document.getElementById('detailHeader').offsetHeight
       this.indexOffset[0] = this.$refs.index0.offsetTop - headerHeight - headerTab
       this.indexOffset[1] = this.$refs.index1.offsetTop - headerHeight - headerTab
       this.indexOffset[2] = this.$refs.index2.offsetTop - headerHeight - headerTab
-      this.indexOffset[3] = this.$refs.index3.offsetTop - headerHeight - headerTab
+        this.indexOffset[3] = this.$refs.index3.offsetTop - headerHeight - headerTab
+      
 
 
     },
     scrollHandler() {
-      this.indexOffsetSeting()
+       if (this.$route.path !== '/festival/detail') return
+        this.indexOffsetSeting()
       this.$nextTick(() => {
         const nowScroll = window.scrollY
         const isOffsetTop = []
