@@ -128,7 +128,7 @@
                 <div>
                   <div class="text">
                     작성자 : {{ v.author_name }} ({{ v.relative_time_description }}) <br />
-                    <el-rate disabled show-score text-color="#000" :colors="['#fff', '#fff', '#5345DB']"
+                    <el-rate disabled show-score text-color="#000" :colors="['#fff', '#5345DB', '#5345DB']"
                       :score-template="`{value} ${VIEW_TEXT.EvnPt}`" :value="Number(v.rating)">
                     </el-rate>
                   </div>
@@ -206,28 +206,22 @@ export default {
       const keyVal = Number(key)
       // this.indexOffsetSeting()
       window.scroll({
-        top: this.indexOffset[keyVal],
+        top: this.indexOffset[keyVal] - 20,
         left: 0,
         behavior: 'smooth'
       });
 
     },
     indexOffsetSeting() {
-      
       const headerHeight = document.querySelector('.header').offsetHeight
-      let headerTab = 0
-      if(document.getElementById('detailHeader')) headerTab =document.getElementById('detailHeader').offsetHeight
-      this.indexOffset[0] = this.$refs.index0.offsetTop - headerHeight - headerTab
-      this.indexOffset[1] = this.$refs.index1.offsetTop - headerHeight - headerTab
-      this.indexOffset[2] = this.$refs.index2.offsetTop - headerHeight - headerTab
-        this.indexOffset[3] = this.$refs.index3.offsetTop - headerHeight - headerTab
-      
-
-
+      this.indexOffset[0] = this.$refs.index0.offsetTop - headerHeight
+      this.indexOffset[1] = this.$refs.index1.offsetTop - headerHeight
+      this.indexOffset[2] = this.$refs.index2.offsetTop - headerHeight
+      this.indexOffset[3] = this.$refs.index3.offsetTop - headerHeight
     },
     scrollHandler() {
-       if (this.$route.path !== '/festival/detail') return
-        this.indexOffsetSeting()
+      if (this.$route.path !== '/festival/detail') return
+      this.indexOffsetSeting()
       this.$nextTick(() => {
         const nowScroll = window.scrollY
         const isOffsetTop = []
@@ -235,7 +229,7 @@ export default {
         this.indexOffset.forEach((v, i) => {
           isOffsetTop[i] = this.$refs[`index${i}`].offsetTop
           isClientHeight[i] = this.$refs[`index${i}`].clientHeight + isOffsetTop[i]
-          if (nowScroll >= isOffsetTop[i] && nowScroll <= isClientHeight[i]) {
+          if (nowScroll >= isOffsetTop[i] - 70 && nowScroll <= isClientHeight[i] - 70) {
             this.activeIndex = String(i)
           }
           // console.log(isOffsetTop[i], isClientHeight[i], nowScroll)

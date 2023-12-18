@@ -15,16 +15,19 @@
                 </gmap-marker>
             </gmap-cluster>
         </gmap-map>
-        <div class="map-list">
+        <div class="map-list" :class="{ active: !listFold }">
+            <button type="button" class="btn btn-fold" :class="{ active: !listFold }" @click="listFold = !listFold"></button>
             <div class="map-list--tit">근처 목록</div>
-            <div v-for="v,i in EVENT_DATA.MAKERS_LIST" :key="i" class="item" @click="onClickListToCenter(v)">
-                <div class="img-wrap">
-                    <img v-if="v.detailData.firstimage" :src="v.detailData.firstimage" alt="" />
-                    <img v-else src="../static/images/Thumbnail.svg" alt="" />
-                </div>
-                <div class="txt-wrap">
-                    <div class="tit">{{ v.detailData.title }}</div>
-                    {{ LOCATION_CODE[`do${v.detailData.areacode}`] }} / 축제
+            <div class="scroll">
+                <div v-for="v,i in EVENT_DATA.MAKERS_LIST" :key="i" class="item" @click="onClickListToCenter(v)">
+                    <div class="img-wrap">
+                        <img v-if="v.detailData.firstimage" :src="v.detailData.firstimage" alt="" />
+                        <img v-else src="../static/images/Thumbnail.svg" alt="" />
+                    </div>
+                    <div class="txt-wrap">
+                        <div class="tit">{{ v.detailData.title }}</div>
+                        {{ LOCATION_CODE[`do${v.detailData.areacode}`] }} / 축제
+                    </div>
                 </div>
             </div>
         </div>
@@ -62,6 +65,7 @@ export default {
     layout: 'index',
     data() {
         return {
+            listFold: true,
             place: 'Singapore',
             zoom:12,
             isNowList: {
@@ -180,8 +184,7 @@ export default {
             lat: v.position.lat,
             lng: v.position.lng
             });
-            this.zoom = 17
-            // this.$refs.map.scrollIntoView({ behavior: 'smooth' })
+            // this.zoom = 17
         }
     }
 }
