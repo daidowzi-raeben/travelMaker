@@ -78,7 +78,7 @@
             <el-option v-for="(v, i) in LOCATION_CODE.do" :key="i" :label="v.doName" :value="v.doCode">
             </el-option>
           </el-select>
-          <el-select placeholder="시/군/구" :value="location.gu" @change="onChangeLocation">
+          <el-select multiple collapse-tags placeholder="시/군/구" :value="location.gu" @change="onChangeLocation">
             <el-option v-for="(v, i) in LOCATION_CODE[`gu${location.do}`]" :key="i" :label="v.guName" :value="v.guCode">
             </el-option>
           </el-select>
