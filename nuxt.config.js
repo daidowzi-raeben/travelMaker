@@ -34,6 +34,10 @@ export default {
         name: 'naver-site-verification',
         content: '783b2f08786d9c4cf3fa6b41af59f567816a7f6d',
       },
+      {
+        name: 'google-adsense-account',
+        content: 'ca-pub-8363464671585235',
+      },
       // {
       //   name: 'google-signin-client_id',
       //   content:
