@@ -44,6 +44,9 @@ export default {
     }
   },
   computed: {},
+  created() {
+    this.$router.push('/festival/list')
+  },
   mounted() {},
 }
 </script>

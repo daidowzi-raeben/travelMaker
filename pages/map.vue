@@ -19,14 +19,16 @@
             <button type="button" class="btn btn-fold" :class="{ active: !listFold }" @click="listFold = !listFold"></button>
             <div class="map-list--tit">근처 목록</div>
             <div class="scroll">
-                <div v-for="v,i in EVENT_DATA.MAKERS_LIST" :key="i" class="item" @click="onClickListToCenter(v)">
-                    <div class="img-wrap">
+                <div v-for="v,i in EVENT_DATA.MAKERS_LIST" :key="i" class="item" >
+                    <div class="img-wrap" @click="onClickListToCenter(v)">
                         <img v-if="v.detailData.firstimage" :src="v.detailData.firstimage" alt="" />
                         <img v-else src="../static/images/Thumbnail.svg" alt="" />
                     </div>
                     <div class="txt-wrap">
+                        <div  @click="onClickListToCenter(v)">
                         <div class="tit">{{ v.detailData.title }}</div>
                         {{ v.detailData.eventstartdate }} ~ {{ v.detailData.eventenddate }}<br />
+                        </div>
                         <el-button type="info" plain size="mini" @click="onClickToDetail(v.detailData)">상세보기</el-button>
                     </div>
                 </div>
@@ -179,7 +181,7 @@ export default {
                 this.MUTATIONS_MAP_MAKERS_LIST(this.isNowList)
             }
         },
-        onClickListToCenter(v) {
+        onClickListToCenter( v) {
             this.$refs.googleMap.panTo({
             lat: v.position.lat,
             lng: v.position.lng

@@ -66,20 +66,20 @@
         <button type="button" class="btn btn-close" @click="filterModalShow = false">&times;</button>
         <div class="input-label">날짜</div>
         <div class="input-wrap">
-          <el-date-picker v-model="date1" type="date" placeholder="날짜선택">
+          <el-date-picker v-model="filterData.stDt" type="date" placeholder="날짜선택">
           </el-date-picker>
           <span class="text">~</span>
-          <el-date-picker v-model="date2" type="date" placeholder="날짜선택">
+          <el-date-picker v-model="filterData.edDt"  :picker-options="onLoadDisabledDate()" type="date" placeholder="날짜선택">
           </el-date-picker>
         </div>
         <div class="input-label">{{ VIEW_TEXT.location }}</div>
         <div class="input-wrap">
-          <el-select placeholder="시/도" :value="location.do" @change="onChangeGuData">
+          <el-select placeholder="시/도" :value="filterData.do" @change="onChangeGuData">
             <el-option v-for="(v, i) in LOCATION_CODE.do" :key="i" :label="v.doName" :value="v.doCode">
             </el-option>
           </el-select>
-          <el-select multiple collapse-tags placeholder="시/군/구" :value="location.gu" @change="onChangeLocation">
-            <el-option v-for="(v, i) in LOCATION_CODE[`gu${location.do}`]" :key="i" :label="v.guName" :value="v.guCode">
+          <el-select multiple collapse-tags placeholder="시/군/구" :value="filterData.gu" @change="onChangeLocation">
+            <el-option v-for="(v, i) in LOCATION_CODE[`gu${filterData.do}`]" :key="i" :label="v.guName" :value="v.guCode">
             </el-option>
           </el-select>
         </div>
@@ -140,12 +140,6 @@ export default {
         label: 'Option5'
       }],
       value: '',
-
-      location: {
-        do: '',
-        gu: '',
-      },
-
       filterModalShow: false,
 
       place: 'Singapore',
@@ -168,6 +162,13 @@ export default {
           width: 0,
           height: -35
         }
+      },
+      filterData: {
+        stDt : new Date(),
+        edDt: new Date(),
+        do: '1',
+        gu: []
+        
       },
     }
   },
@@ -206,13 +207,23 @@ export default {
         this.ACTION_MAP_PLACE_ID(v)
       }
     },
+    
+    onLoadDisabledDate(v) {
+      console.log('====>',v)
+      const option = {
+        disabledDate(time) {
+          return time.getTime() > this.filterData.stDt;
+        }
+      }
+    return option
 
+},
     onChangeGuData(v) {
-      this.location.do = v
-      this.location.gu = ''
+      this.filterData.do = v
+      this.filterData.gu = ''
     },
     onChangeLocation(v) {
-      this.location.gu = v
+      this.filterData.gu = v
     },
     onClickListMode(v) {
       this.listMode = v
