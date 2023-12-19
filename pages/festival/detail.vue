@@ -2,7 +2,7 @@
   <div class="wrap">
     <div class="content">
       <div class="detail-wrap">
-        <div class="detail-img">
+        <div class="detail-img" v-if="EVENT_DATA.PHOTOS_COMN.length != 0">
           <el-carousel :autoplay="false" arrow="always">
             <el-carousel-item v-for="item in EVENT_DATA.PHOTOS_COMN.length > 3 ? 4 : EVENT_DATA.PHOTOS_COMN.length" :key="`comn${item}`">
               <img v-if="EVENT_DATA.PHOTOS_COMN && EVENT_DATA.PHOTOS_COMN[item-1] && EVENT_DATA.PHOTOS_COMN[item-1]?.originimgurl" :src="EVENT_DATA.PHOTOS_COMN && EVENT_DATA.PHOTOS_COMN[item-1] ? EVENT_DATA.PHOTOS_COMN[item-1]?.originimgurl : ''"
@@ -17,7 +17,6 @@
           </el-carousel>
         </div>
         <div class="detail-info">
-          {{ indexOffset }}
           <div class="tit">{{ EVENT_DATA.DETAIL?.title }}</div>
           <div class="info">
             <p class="line">
@@ -119,26 +118,32 @@
             구글리뷰
             <router-link to="" class="right">더보기</router-link>
           </div>
-          <div v-for="v, i in EVENT_DATA.REVIEW" :key="i" class="review-wrap">
-            <div v-if="v.language.substr(0, 2) === lang">
-              <div class="info">
-                <div class="img">
-                  <img :src="v.profile_photo_url" width="50">
-                </div>
-                <div>
-                  <div class="text">
-                    작성자 : {{ v.author_name }} ({{ v.relative_time_description }}) <br />
-                    <el-rate disabled show-score text-color="#000" :colors="['#fff', '#5345DB', '#5345DB']"
-                      :score-template="`{value} ${VIEW_TEXT.EvnPt}`" :value="Number(v.rating)">
-                    </el-rate>
+          <div v-if="EVENT_DATA.REVIEW.length === 0" class="nodata type2">
+            <img src="../../static/images/nodata.svg" alt="" />
+            리뷰가 없어요.
+          </div>
+          <template v-else>
+            <div v-for="v, i in EVENT_DATA.REVIEW" :key="i" class="review-wrap">
+              <div v-if="v.language.substr(0, 2) === lang">
+                <div class="info">
+                  <div class="img">
+                    <img :src="v.profile_photo_url" width="50">
+                  </div>
+                  <div>
+                    <div class="text">
+                      작성자 : {{ v.author_name }} ({{ v.relative_time_description }}) <br />
+                      <el-rate disabled show-score text-color="#000" :colors="['#fff', '#5345DB', '#5345DB']"
+                        :score-template="`{value} ${VIEW_TEXT.EvnPt}`" :value="Number(v.rating)">
+                      </el-rate>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="con">
-                {{ v.text }}
+                <div class="con">
+                  {{ v.text }}
+                </div>
               </div>
             </div>
-          </div>
+          </template>
         </div>
         <div class="detail-con" ref="index3">
           <div class="detail-con--tit">상세정보</div>

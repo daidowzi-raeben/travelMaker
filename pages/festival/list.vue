@@ -16,6 +16,12 @@
           <button type="button" class="btn btn-filter" @click="filterModalShow = true">필터</button>
         </div>
       </div>
+      <div class="filter-list">
+        <div class="label">
+          서울/강남구
+          <button type="button" class="btn-delete">&times;</button>
+        </div>
+      </div>
       <div class="list-option">
         <div class="left">
           <label class="text-check">
