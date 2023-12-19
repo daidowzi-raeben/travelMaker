@@ -48,7 +48,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       // { src: 'https://apis.google.com/js/platform.js?onload=init' },
       {
-        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8019581580650071',
+        src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8363464671585235',
         crossorigin: 'anonymous',
       },
       // {
