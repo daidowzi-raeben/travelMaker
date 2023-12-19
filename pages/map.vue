@@ -26,7 +26,8 @@
                     </div>
                     <div class="txt-wrap">
                         <div class="tit">{{ v.detailData.title }}</div>
-                        {{ LOCATION_CODE[`do${v.detailData.areacode}`] }} / 축제
+                        {{ v.detailData.eventstartdate }} ~ {{ v.detailData.eventenddate }}<br />
+                        <el-button type="info" plain size="mini" @click="onClickToDetail(v.detailData)">상세보기</el-button>
                     </div>
                 </div>
             </div>
@@ -159,9 +160,8 @@ export default {
             };
         },
         onClickToDetail(v, p) {
-            console.log(v)
             if (v?.place_id) {
-                this.$router.push(`/detail?place=${v?.secretKey}`)
+                this.$router.push(`/festival/detail?place=${v?.secretKey}`)
             } else {
                 this.ACTION_MAP_PLACE_ID(v)
             }
@@ -185,7 +185,7 @@ export default {
             lng: v.position.lng
             });
             // this.zoom = 17
-        }
+        },
     }
 }
 </script>

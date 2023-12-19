@@ -675,7 +675,7 @@ ul {
         width:30%;
         min-width: 30%;
         max-width: 30%;
-        height: 60px;
+        height: 80px;
         background-color:#000;
         margin-right:15px;
         img {
@@ -698,6 +698,9 @@ ul {
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
+        }
+        .el-button{
+          margin-top:10px;
         }
       }
     }
@@ -826,4 +829,10 @@ ul {
       background-size:100% !important;
     }
   }
+}
+
+.el-button--info.is-plain{
+  color:#666 !important;
+  background: #f4f4f5 !important;
+  border-color: #d3d4d6 !important;
 }
