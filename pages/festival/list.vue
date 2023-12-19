@@ -16,10 +16,21 @@
           <button type="button" class="btn btn-filter" @click="filterModalShow = true">필터</button>
         </div>
       </div>
-      <div class="filter-list">
-        <div class="label">
-          서울/강남구
-          <button type="button" class="btn-delete">&times;</button>
+      <div v-if="filterData.isFilter === true" class="filter-list">
+        <div v-if="filterData.do" class="label">
+          {{ LOCATION_CODE[`do${filterData.do}`] }}
+          <!-- <button type="button" class="btn-delete">&times;</button> -->
+        </div>
+
+        <template v-if="filterData.gu && filterData.gu.length > 0">
+          <div v-for="(v, i) in filterData.gu" :key="i" class="label">
+            {{ LOCATION_CODE[`do${filterData.do}`] }} / {{ onLoadGuName(v) }}
+            <!-- <button type="button" class="btn-delete">&times;</button> -->
+          </div>
+        </template>
+        <div class="label" @click="onClickResetFilter">
+          초기화
+          <!-- <button type="button" class="btn-delete">&times;</button> -->
         </div>
       </div>
       <div class="list-option">
@@ -38,10 +49,11 @@
             @click="onClickListMode('image')"></button>
         </div>
       </div>
-      <ul v-if="EVENT_DATA.LIST != ''" class="thumb-list" :class="{ list: listMode == 'list', image: listMode == 'image' }">
+      <ul v-if="EVENT_DATA.LIST != ''" class="thumb-list"
+        :class="{ list: listMode == 'list', image: listMode == 'image' }">
         <template v-for="(v, i) in EVENT_DATA.LIST">
-        <li v-if="i < isRowItemCnt * isPage"  :key="i" class="thumb-list--item" @click="onClickToDetail(v)">
-           <div class="thumb">
+          <li v-if="i < isRowItemCnt * isPage" :key="i" class="thumb-list--item" @click="onClickToDetail(v)">
+            <div class="thumb">
               <img v-if="v.firstimage" :src="v.firstimage" alt="" />
               <img v-else src="../../static/images/Thumbnail.svg" alt="" />
             </div>
@@ -69,12 +81,15 @@
           <el-date-picker v-model="filterData.stDt" type="date" placeholder="날짜선택">
           </el-date-picker>
           <span class="text">~</span>
-          <el-date-picker v-model="filterData.edDt"  :picker-options="onLoadDisabledDate()" type="date" placeholder="날짜선택">
+          <el-date-picker v-model="filterData.edDt" :picker-options="onLoadDisabledDate(filterData.stDt)" type="date"
+            placeholder="날짜선택">
           </el-date-picker>
         </div>
         <div class="input-label">{{ VIEW_TEXT.location }}</div>
         <div class="input-wrap">
           <el-select placeholder="시/도" :value="filterData.do" @change="onChangeGuData">
+            <el-option :label="'전체'" :value="''">
+            </el-option>
             <el-option v-for="(v, i) in LOCATION_CODE.do" :key="i" :label="v.doName" :value="v.doCode">
             </el-option>
           </el-select>
@@ -83,7 +98,7 @@
             </el-option>
           </el-select>
         </div>
-        <div class="input-label">분류</div>
+        <!-- <div class="input-label">분류</div>
         <div class="input-wrap">
           <el-select v-model="value" placeholder="대분류">
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
@@ -93,9 +108,9 @@
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
-        </div>
+        </div> -->
         <div class="btn-wrap">
-          <el-button type="primary">필터적용</el-button>
+          <el-button type="primary" @click="onClickFilter">필터적용</el-button>
         </div>
       </div>
     </div>
@@ -164,12 +179,14 @@ export default {
         }
       },
       filterData: {
-        stDt : new Date(),
-        edDt: new Date(),
-        do: '1',
+        isFilter: false,
+        stDt: null,
+        edDt: null,
+        do: '',
         gu: []
-        
+
       },
+
     }
   },
   head() {
@@ -207,17 +224,16 @@ export default {
         this.ACTION_MAP_PLACE_ID(v)
       }
     },
-    
+
     onLoadDisabledDate(v) {
-      console.log('====>',v)
       const option = {
         disabledDate(time) {
-          return time.getTime() > this.filterData.stDt;
+          return time.getTime() < Date.now();
         }
       }
-    return option
+      return option
 
-},
+    },
     onChangeGuData(v) {
       this.filterData.do = v
       this.filterData.gu = ''
@@ -243,9 +259,19 @@ export default {
     },
     onClickListSearch() {
       const params = {
-        str: this.search
+        str: this.search,
+        stDt: null,
+        edDt: null,
+        do: null,
+        gu: null,
       }
-      if (this.search) {
+      if (this.filterData.isFilter === true) {
+        params.stDt = this.filterData.stDt
+        params.edDt = this.filterData.edDt
+        params.do = this.filterData.do
+        params.gu = this.filterData.gu
+      }
+      if (this.search || this.filterData.isFilter === true) {
         this.ACTION_MAP_LIST(params)
       } else {
         this.ACTION_MAP_LIST()
@@ -263,6 +289,32 @@ export default {
           this.isThow = true
         }, 500);
       }
+    },
+    onClickFilter() {
+      this.filterData.isFilter = true
+      this.filterModalShow = false
+      this.onClickListSearch()
+    },
+    onLoadGuName(v) {
+      for (let i = 0; i < this.LOCATION_CODE[`gu${this.filterData.do}`].length; i++) {
+        if (this.LOCATION_CODE[`gu${this.filterData.do}`][i].guCode === v) {
+          return this.LOCATION_CODE[`gu${this.filterData.do}`][i].guName
+        }
+
+
+      }
+
+    },
+    onClickResetFilter() {
+      this.filterData = {
+        isFilter: false,
+        stDt: null,
+        edDt: null,
+        do: '',
+        gu: []
+
+      }
+      this.onClickListSearch()
     }
   }
 }

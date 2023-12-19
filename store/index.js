@@ -122,15 +122,45 @@ const createStore = () => {
       },
       ACTION_MAP_LIST({ commit }, params) {
         let str = ''
+        let stDt = ''
+        let edDt = ''
+        let dos = ''
+        let gu = ''
         if (params?.str) {
           str = params.str
         }
-        this.$axios
-          .get(`${process.env.VUE_APP_API}?mode=list&str=${str}`, params, {
-            header: {
-              'Context-Type': 'multipart/form-data',
-            },
+        if (params?.stDt) {
+          stDt = new Date(params.stDt)
+            .toLocaleDateString()
+            .replace(/\./g, '')
+            .replace(/\s/g, '-')
+        }
+        if (params?.edDt) {
+          edDt = new Date(params.edDt)
+            .toLocaleDateString()
+            .replace(/\./g, '')
+            .replace(/\s/g, '-')
+        }
+        if (params?.do) {
+          dos = params.do
+        }
+        if (params?.gu) {
+          let gudata = ''
+          params?.gu.forEach((element) => {
+            gudata += element + '|'
           })
+          gu = gudata
+        }
+        this.$axios
+          .get(
+            `${process.env.VUE_APP_API}?mode=list&str=${str}&stDt=${stDt}&edDt=${edDt}&do=${dos}&gu=${gu}`,
+            params,
+            {
+              header: {
+                'Context-Type': 'multipart/form-data',
+              },
+            }
+          )
           .then((res) => {
             console.log(res.data)
             commit('MUTATIONS_MAP_LIST', res.data)
