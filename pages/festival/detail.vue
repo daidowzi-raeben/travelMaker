@@ -30,8 +30,8 @@
           <div class="tit">{{ EVENT_DATA.DETAIL?.title }}</div>
           <div class="info">
             <p class="line">
-              <span class="text">서울</span> /
-              <span class="text">축제</span>
+              <!-- <span class="text">서울</span> /
+              <span class="text">축제</span> -->
               <span class="text">
                 <el-rate disabled show-score text-color="#000" :colors="['#fff', '#fff', '#5345DB']"
                   :score-template="`{value} ${VIEW_TEXT.EvnPt}`"
@@ -39,9 +39,9 @@
                 </el-rate>
               </span>
             </p>
-            <p class="line">
+            <!-- <p class="line">
               <span class="text">{{ VIEW_TEXT.EvnOvrDsc }}</span>
-            </p>
+            </p> -->
           </div>
         </div>
         <el-menu id="detailHeader" :default-active="activeIndex" class="el-menu-demo sticky" mode="horizontal"

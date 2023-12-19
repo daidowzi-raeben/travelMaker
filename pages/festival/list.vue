@@ -28,8 +28,8 @@
             <!-- <button type="button" class="btn-delete">&times;</button> -->
           </div>
         </template>
-        <div class="label" @click="onClickResetFilter">
-          초기화
+        <div class="label reset" @click="onClickResetFilter">
+          필터초기화
           <!-- <button type="button" class="btn-delete">&times;</button> -->
         </div>
       </div>

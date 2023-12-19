@@ -29,7 +29,7 @@
                         <div class="tit">{{ v.detailData.title }}</div>
                         {{ v.detailData.eventstartdate }} ~ {{ v.detailData.eventenddate }}<br />
                         </div>
-                        <el-button type="info" plain size="mini" @click="onClickToDetail(v.detailData)">상세보기</el-button>
+                        <el-button type="info" plain size="mini" @click="modalDetailOpen(v.detailData)">상세보기</el-button>
                     </div>
                 </div>
             </div>
@@ -54,6 +54,174 @@
         </div> -->
 
         <router-link to="/festival/list" class="bottom-btn"><span class="icon icon-list"></span>리스트보기</router-link>
+        <div class="modal" v-bind:class="{ show: modalShow }">
+            <div class="modal-dim"></div>
+            <div class="modal-con full" v-if="modalShow">
+                <button type="button" class="btn btn-close" @click="modalDetailClose">&times;</button>
+                <div class="detail-wrap">
+                    <div class="detail-img" >
+                    <el-carousel :autoplay="false" arrow="always">
+                        <template v-if="EVENT_DATA.PHOTOS_COMN.length === 0 && EVENT_DATA.PHOTOS.length === 0">
+                            <el-carousel-item>
+                        <img :src="EVENT_DATA.DETAIL?.detailPhoto"  height="100%"/>
+                        </el-carousel-item>
+                        </template>
+                        <el-carousel-item v-for="item in EVENT_DATA.PHOTOS_COMN.length > 3 ? 4 : EVENT_DATA.PHOTOS_COMN.length"
+                        :key="`comn${item}`">
+                        <img
+                            v-if="EVENT_DATA.PHOTOS_COMN && EVENT_DATA.PHOTOS_COMN[item - 1] && EVENT_DATA.PHOTOS_COMN[item - 1]?.originimgurl"
+                            :src="EVENT_DATA.PHOTOS_COMN && EVENT_DATA.PHOTOS_COMN[item - 1] ? EVENT_DATA.PHOTOS_COMN[item - 1]?.originimgurl : ''"
+                            height="100%" />
+                        </el-carousel-item>
+                        <template v-if="EVENT_DATA.PHOTOS_COMN.length === 0">
+                        <el-carousel-item v-for="item in EVENT_DATA.PHOTOS.length > 3 ? 4 : EVENT_DATA.PHOTOS.length" :key="item">
+                            <img v-if="EVENT_DATA.PHOTOS && EVENT_DATA.PHOTOS[item] && EVENT_DATA.PHOTOS[item]?.imgUrl"
+                            :src="EVENT_DATA.PHOTOS && EVENT_DATA.PHOTOS[item] ? EVENT_DATA.PHOTOS[item]?.imgUrl : ''"
+                            height="100%" />
+                        </el-carousel-item>
+                        </template>
+                    
+                    </el-carousel>
+                    </div>
+                    <div class="detail-info">
+                    <div class="tit">{{ EVENT_DATA.DETAIL?.title }}</div>
+                    <div class="info">
+                        <p class="line">
+                        <!-- <span class="text">{{ LOCATION_CODE[`do${EVENT_DATA.DETAIL?.}`] }}</span> / -->
+                        <!-- <span class="text">축제</span> -->
+                        <span class="text">
+                            <el-rate disabled show-score text-color="#000" :colors="['#5345DB','#5345DB','#5345DB','#5345DB','#5345DB']"
+                            :score-template="`{value} ${VIEW_TEXT.EvnPt}`"
+                            :value="EVENT_DATA.DETAIL?.totalRating ? Number(EVENT_DATA.DETAIL?.totalRating) : 0">
+                            </el-rate>
+                        </span>
+                        </p>
+                        <!-- <p class="line">
+                        <span class="text">{{ VIEW_TEXT.EvnOvrDsc }}</span>
+                        </p> -->
+                    </div>
+                    </div>
+                    <!-- <el-menu id="detailHeader" :default-active="activeIndex" class="el-menu-demo sticky" mode="horizontal"
+                    @select="handleSelect">
+                    <el-menu-item index="0">{{ VIEW_TEXT.evnBasInfo }}</el-menu-item>
+                    <el-menu-item index="1">{{ VIEW_TEXT.evnUseInfo }}</el-menu-item>
+                    <el-menu-item index="2">{{ VIEW_TEXT.EvnRev }}</el-menu-item>
+                    <el-menu-item index="3">{{ VIEW_TEXT.evnDtlInfo }}</el-menu-item>
+                    </el-menu> -->
+                    <div class="detail-con" ref="index0">
+                    <div class="detail-con--tit">기본정보</div>
+                    <table class="table">
+                        <colgroup>
+                        <col width="100px" />
+                        <col width="auto" />
+                        </colgroup>
+                        <tr>
+                        <th>주소</th>
+                        <td>
+                            {{ EVENT_DATA.DETAIL?.addr1 }} {{ EVENT_DATA.DETAIL?.addr2 }}
+                        </td>
+                        </tr>
+                        <tr>
+                        <th>우편번호</th>
+                        <td>
+                            {{ EVENT_DATA.DETAIL?.comn_zipcode }}
+                        </td>
+                        </tr>
+                        <tr>
+                        <th>주최자</th>
+                        <td>
+                            {{ EVENT_DATA.DETAIL?.comn_telname }}
+                        </td>
+                        </tr>
+                        <tr>
+                        <th>전화번호</th>
+                        <td>
+                            {{ EVENT_DATA.DETAIL?.comn_tel }}
+                        </td>
+                        </tr>
+                        <tr>
+                        <th>홈페이지</th>
+                        <td>
+                            <div v-html="EVENT_DATA.DETAIL?.comn_homepage"></div>
+                        </td>
+                        </tr>
+                    </table>
+                    </div>
+                    <div class="detail-con" ref="index1">
+                    <div class="detail-con--tit">이용안내</div>
+                    <table class="table">
+                        <colgroup>
+                        <col width="100px" />
+                        <col width="auto" />
+                        </colgroup>
+                        <tr>
+                        <th>진행기간</th>
+                        <td>
+                            {{ EVENT_DATA.DETAIL?.eventstartdate }} ~ {{ EVENT_DATA.DETAIL?.eventenddate }}
+                        </td>
+                        </tr>
+                        <tr>
+                        <th>진행시간</th>
+                        <td>
+                            <span v-html="EVENT_DATA.DETAIL?.playtime"></span>
+                        </td>
+                        </tr>
+                        <tr>
+                        <th>진행장소</th>
+                        <td>
+                            {{ EVENT_DATA.DETAIL?.eventplace }}
+                        </td>
+                        </tr>
+                        <tr>
+                        <th>연령제한</th>
+                        <td>
+                            {{ EVENT_DATA.DETAIL?.agelimit }}
+                        </td>
+                        </tr>
+                    </table>
+                    </div>
+                    <div ref="index2" class="detail-con">
+                    <div class="detail-con--tit">
+                        구글리뷰
+                        <router-link to="" class="right">더보기</router-link>
+                    </div>
+                    <div v-if="EVENT_DATA.REVIEW.length === 0" class="nodata type2">
+                        <img src="../static/images/nodata.svg" alt="" />
+                        리뷰가 없어요.
+                    </div>
+                    <template v-else>
+                        <div v-for="v, i in EVENT_DATA.REVIEW" :key="i" class="review-wrap">
+                        <div v-if="v.language.substr(0, 2) === lang">
+                            <div class="info">
+                            <div class="img">
+                                <img :src="v.profile_photo_url" width="50">
+                            </div>
+                            <div>
+                                <div class="text">
+                                작성자 : {{ v.author_name }} ({{ v.relative_time_description }}) <br />
+                                <el-rate disabled show-score text-color="#000" :colors="['#5345DB', '#5345DB', '#5345DB', '#5345DB', '#5345DB']"
+                                    :score-template="`{value} ${VIEW_TEXT.EvnPt}`" :value="Number(v.rating)">
+                                </el-rate>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="con">
+                            {{ v.text }}
+                            </div>
+                        </div>
+                        </div>
+                    </template>
+                    </div>
+                    <div class="detail-con" ref="index3">
+                    <div class="detail-con--tit">상세정보</div>
+                    <div v-html="EVENT_DATA.DETAIL?.comn_overview"></div>
+                    <!-- <div v-for="v, i in EVENT_DATA.PHOTOS" :key="i">
+                        <img :src="v.imgUrl" width="100%" />
+                    </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -95,6 +263,13 @@ export default {
                     height: -35
                 }
             },
+
+            lang: 'ko',
+            activeIndex: '0',
+            scrollPostion: 0,
+            indexOffset: [],
+
+            modalShow:false,
         }
     },
      head() {
@@ -103,7 +278,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['EVENT_DATA']),
+        ...mapState(['EVENT_DATA', 'VIEW_TEXT']),
         ...mapState(['LOCATION_CODE'])
     },
     created() {
@@ -124,6 +299,7 @@ export default {
     methods: {
         ...mapMutations(['MUTATIONS_MAP_LIST','MUTATIONS_MAP_MAKERS_LIST']),
         ...mapActions(['ACTION_MAP_LIST', 'ACTION_MAP_PLACE_ID']),
+        ...mapActions(['ACTION_MAP_DETAIL']),
 
         onClickMaker(v, e) {
             console.log(v)
@@ -188,6 +364,29 @@ export default {
             });
             // this.zoom = 17
         },
+        // handleSelect(key, keyPath) {
+        //     if (!key) return
+        //     const keyVal = Number(key)
+        //     window.scroll({
+        //         top: this.indexOffset[keyVal] - 20,
+        //         left: 0,
+        //         behavior: 'smooth'
+        //     });
+        // },
+        modalDetailOpen(v){
+            const params = {
+                contentid: String(v?.secretKey)
+            }
+            this.ACTION_MAP_DETAIL(params)
+            this.modalShow = true
+        },
+        modalDetailClose(){
+            this.modalShow = false
+            const params = {
+                contentid: ''
+            }
+            this.ACTION_MAP_DETAIL(params)
+        }
     }
 }
 </script>

@@ -22,7 +22,7 @@
         </ul>
       </div>
     </div>
-    <div v-if="$route.fullPath == '/'" class="main-header">
+    <!-- <div v-if="$route.fullPath == '/'" class="main-header">
       <div class="header-logo"></div>
       <div class="right">
         <button type="button" class="btn header-menu" @click="headerMenuShow = true"></button>
@@ -36,8 +36,8 @@
           <i class="el-icon-search"></i>
         </button>
       </div>
-    </div>
-    <div v-else class="header">
+    </div> -->
+    <div class="header">
       <div class="header-logo" @click="$router.push('/')"></div>
       <button type="button" class="btn header-menu" @click="headerMenuShow = true"></button>
     </div>

@@ -406,6 +406,24 @@ ul {
     position:absolute;
     width:100%;
     box-shadow: 0 -10px 20px rgba(000, 000, 000, 0.1);
+    &.full{
+      width:90%;
+      height:90%;
+      left:5%;
+      top:5%;
+      overflow:auto;
+      border-radius: 20px;
+      padding:20px;
+      background-color:#e4e8f4;
+      box-shadow: 0 5px 20px rgba(000, 000, 000, 0.2);
+      .btn-close{
+        right: calc(5% + 10px);
+        top: calc(5% + 10px);
+        position: fixed;
+        z-index: 10;
+        box-shadow: 0 5px 10px rgba(000, 000, 000, 0.2);
+      }
+    }
     &.bottom{
       border-radius: 40px 40px 0 0;
       left:0;
@@ -438,6 +456,7 @@ ul {
       display: flex;
       align-items: center;
       justify-content: center;
+      font-family: monospace;
     }
   }
 }
@@ -466,6 +485,11 @@ ul {
       justify-content: center;
       align-items: center;
       margin-left:5px;
+    }
+    &.reset{
+      background:#fff;
+      padding:5px 10px;
+      border-color:$colPink;
     }
   }
 }
@@ -835,4 +859,9 @@ ul {
   color:#666 !important;
   background: #f4f4f5 !important;
   border-color: #d3d4d6 !important;
+}
+
+.el-carousel__arrow i{
+  font-size:18px;
+  font-weight: 600;
 }
