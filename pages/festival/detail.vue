@@ -2,18 +2,28 @@
   <div class="wrap">
     <div class="content">
       <div class="detail-wrap">
-        <div class="detail-img" v-if="EVENT_DATA.PHOTOS_COMN.length != 0">
+        <div class="detail-img" >
           <el-carousel :autoplay="false" arrow="always">
-            <el-carousel-item v-for="item in EVENT_DATA.PHOTOS_COMN.length > 3 ? 4 : EVENT_DATA.PHOTOS_COMN.length" :key="`comn${item}`">
-              <img v-if="EVENT_DATA.PHOTOS_COMN && EVENT_DATA.PHOTOS_COMN[item-1] && EVENT_DATA.PHOTOS_COMN[item-1]?.originimgurl" :src="EVENT_DATA.PHOTOS_COMN && EVENT_DATA.PHOTOS_COMN[item-1] ? EVENT_DATA.PHOTOS_COMN[item-1]?.originimgurl : ''"
+             <template v-if="EVENT_DATA.PHOTOS_COMN.length === 0 && EVENT_DATA.PHOTOS.length === 0">
+                <el-carousel-item>
+              <img :src="EVENT_DATA.DETAIL?.detailPhoto"  height="100%"/>
+              </el-carousel-item>
+              </template>
+            <el-carousel-item v-for="item in EVENT_DATA.PHOTOS_COMN.length > 3 ? 4 : EVENT_DATA.PHOTOS_COMN.length"
+              :key="`comn${item}`">
+              <img
+                v-if="EVENT_DATA.PHOTOS_COMN && EVENT_DATA.PHOTOS_COMN[item - 1] && EVENT_DATA.PHOTOS_COMN[item - 1]?.originimgurl"
+                :src="EVENT_DATA.PHOTOS_COMN && EVENT_DATA.PHOTOS_COMN[item - 1] ? EVENT_DATA.PHOTOS_COMN[item - 1]?.originimgurl : ''"
                 height="100%" />
             </el-carousel-item>
             <template v-if="EVENT_DATA.PHOTOS_COMN.length === 0">
-            <el-carousel-item v-for="item in EVENT_DATA.PHOTOS.length > 3 ? 4 : EVENT_DATA.PHOTOS.length" :key="item">
-              <img v-if="EVENT_DATA.PHOTOS && EVENT_DATA.PHOTOS[item] &&  EVENT_DATA.PHOTOS[item]?.imgUrl" :src="EVENT_DATA.PHOTOS && EVENT_DATA.PHOTOS[item] ? EVENT_DATA.PHOTOS[item]?.imgUrl : ''"
-                height="100%" />
-            </el-carousel-item>
+              <el-carousel-item v-for="item in EVENT_DATA.PHOTOS.length > 3 ? 4 : EVENT_DATA.PHOTOS.length" :key="item">
+                <img v-if="EVENT_DATA.PHOTOS && EVENT_DATA.PHOTOS[item] && EVENT_DATA.PHOTOS[item]?.imgUrl"
+                  :src="EVENT_DATA.PHOTOS && EVENT_DATA.PHOTOS[item] ? EVENT_DATA.PHOTOS[item]?.imgUrl : ''"
+                  height="100%" />
+              </el-carousel-item>
             </template>
+           
           </el-carousel>
         </div>
         <div class="detail-info">
@@ -57,7 +67,7 @@
             <tr>
               <th>우편번호</th>
               <td>
-                 {{ EVENT_DATA.DETAIL?.comn_zipcode }}
+                {{ EVENT_DATA.DETAIL?.comn_zipcode }}
               </td>
             </tr>
             <tr>
@@ -178,7 +188,20 @@ export default {
   },
   head() {
     return {
-      title: `${this.EVENT_DATA.DETAIL?.title}`
+      title: `${this.EVENT_DATA.DETAIL?.title}`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'og:description',
+          content: this.EVENT_DATA.DETAIL?.comn_overview,
+        },
+        {
+          hid: 'description',
+          name: 'og:image',
+          property: 'og:image',
+          content: this.EVENT_DATA.DETAIL?.detailPhoto
+        },
+      ]
     }
   },
   computed: {
