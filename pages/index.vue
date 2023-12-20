@@ -51,7 +51,7 @@
       </div>
       <div>
         <Adsense data-ad-client="ca-pub-8363464671585235" data-ad-slot="9977730666" data-ad-format="auto"
-          :data-full-width-responsive="true">
+          data-full-width-responsive="true">
         </Adsense>
       </div>
       <ul v-if="EVENT_DATA.LIST != ''" class="thumb-list"
