@@ -49,6 +49,11 @@
             @click="onClickListMode('image')"></button>
         </div>
       </div>
+      <div>
+        <Adsense data-ad-client="ca-pub-8363464671585235" data-ad-slot="9977730666" data-ad-format="auto"
+          :data-full-width-responsive="true">
+        </Adsense>
+      </div>
       <ul v-if="EVENT_DATA.LIST != ''" class="thumb-list"
         :class="{ list: listMode == 'list', image: listMode == 'image' }">
         <template v-for="(v, i) in EVENT_DATA.LIST">
@@ -208,6 +213,10 @@ export default {
 
     // 인피니티 스크롤
     document.addEventListener('scroll', this.handlerScrollEvents);
+
+    this.$nextTick(() => {
+      (window.adsbygoogle || []).push({});
+    })
   },
   unmounted() {
     document.removeEventListener('scroll', this.handlerScrollEvents);

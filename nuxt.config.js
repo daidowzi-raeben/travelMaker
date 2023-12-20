@@ -51,6 +51,7 @@ export default {
         src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8363464671585235',
         crossorigin: 'anonymous',
       },
+
       // {
       //   src: 'https://accounts.google.com/gsi/client',
       //   async: true,
@@ -94,6 +95,7 @@ export default {
     { src: '~plugins/googleMaps.js', ssr: false, mode: 'client' },
     { src: '~plugins/vue-google-oauth2.js', ssr: false, mode: 'client' },
     { src: '~plugins/axios.js', ssr: false, mode: 'client' },
+    { src: '~plugins/AdSense.js', ssr: false, mode: 'client' },
     {
       src: '~plugins/vue-cropper.js',
       ssr: false,
