@@ -96,6 +96,8 @@ export default {
     { src: '~plugins/vue-google-oauth2.js', ssr: false, mode: 'client' },
     { src: '~plugins/axios.js', ssr: false, mode: 'client' },
     { src: '~plugins/AdSense.js', ssr: false, mode: 'client' },
+    // { src: '~plugins/Analytics.js', ssr: false, mode: 'client' },
+    // { src: '~plugins/Gtag.js', ssr: false, mode: 'client' },
     {
       src: '~plugins/vue-cropper.js',
       ssr: false,
